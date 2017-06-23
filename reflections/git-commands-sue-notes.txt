@@ -1,0 +1,112 @@
+5. Git and GitHub - Reflections
+
+Learned about comparing files:
+
+1. download files to compare
+2. go to Command Prompt 
+3. Type "cd Downloads" to get to the Downloads dir
+4. Type "FC file-name-one.js file-name-two.js" to see the differences in the two files (file compare)
+
+Interesting paper on "Reflections" and how they relate to deep learning:
+http://184.182.233.150/rid=1LW06D9V6-26428MK-1Z64/Mezirow's%20chapter,%20How%20Critical%20Refletion%20Triggers%20TL.pdf
+
+Thinking about/making sense of what we've learned (reflecting) helps us to remember and retain what we've learned. 
+
+--------------------------c
+Command Prompt - Linux Command Basics - do this in GitBASH (Tutorial for this is at: http://linuxsurvival.com/)
+
+1. "ls" = list contents of dir
+2. "more file-name" = show the contents of a file - - click "(spacebar)" to go to the next page if there is more to see
+3. "mkdir directory-name" = make a new directory named "directory-name"
+4. "mv file-to-be-moved dir-into-which-file-will-be-moved" MOVE FILE/DIR into following DIR
+	OR
+	"mv file-name-to-be-changed new-file-name"
+5. "cd directory-name" = CHANGE DIR location to directory-name
+6. "pwd" = PRINT WORKING DIR (shows you where you are in the dir tree structure)
+7. "cd .." = CHANGE DIR going up one level in the tree structure
+	NOTE: "cd" is the COMMAND, ".." is the ARGUMENT
+8. "cp reptiles/cobras snakes" = COPY the file, "cobras", to the "snakes" dir (uses relative paths)
+9. "rm reptiles/cobras" = removes/deletes "cobras" from the "reptiles" dir
+10. "ls -l" = list files with OPTION, "long listing" (anything that starts with "-" is an OPTION)
+
+	zoo:primates> ls -l
+-rw-r--r-- keeper prim 547 9:31 chimps
+-rw-r--r-- keeper prim 983 9:32 gorillas
+-rw-r--r-- keeper prim 485 9:34 sq_monks
+^    ^       ^     ^    ^   ^
+|    |       |     |    |   |
+|    |       |     |    |   |
+type |      owner  |   size |
+     |             |        |
+     |             |        |
+  security       group   last mod
+For permissions - - -user(owner)-group-other(world) (-rwxrw-r-- means user who created file can read/write/execute, group can read/write, world can read only)
+11. "chmod" = Change mode - used to change user permissions
+	EXAMPLE: chmod o
+		chmod o+
+		chmod o+x (adds permission to execute file for "other/world" users)
+		chmod ugo-rwx gorillas (revokes permissions from users/groups/others to read/write/execute the file "gorillas")
+12. "*" is a wild card character (can indicate no character or any number of characters, like "chmod g+w *" gives write privileges to the group for all files in the dir - - "*ing" would select "ing" and "sing" and "running")
+12. "?" is a wild card character that indicates only one character ("sp??t" would match "sport" but not "spat")
+13. ACLs are ACCESS CONTROL LISTS (Look this up if you need more robust user control)
+14. "groups" = tells you which groups you are in as a user
+15. Running a program (Example: Sublime)
+	"C:/Program\ Files/Sublime\ Text\ 2/sublime_text.exe"
+
+
+GIT COMMANDS:
+
+1. "git log --stat" = shows which files (commits) have changed
+
+2. "q" = gets you back to command prompt
+
+3. "git diff fileID-one fileID-two" = compares two commits of files
+
+4. "git config --global color.ui auto" = adds color coding to editor/gitbash
+
+5. If you enter, "git log" and get stuck (you see (END) or just a colon, enter ":q" to get back to the command prompt)
+
+6. Copy/Paste = "Ctrl-Ins"/"Shft-Ins"
+
+7. "git checkout the-number-of-this-commit"
+
+8. "git clone url-of-repository dir-where-you-want-cloned-repository-to-go" = cloning an entire repository
+
+9. "scp" = makes a secure copy
+
+10. "git init name-of-dir-to-become-repository" = 
+	turns a dir into a GIT repository
+
+11. "git add file-name.txt" = adds a file from the 
+working dir to the staging area
+
+12. "ls -a" = shows all files in the dir (you see a 
+.git file after running "git init" - there aren't any 
+commits until you run "git commit" though)
+
+13. "git status" = shows me what it happenning in a 
+dir that is a GIT repository - can show "Untracked
+files", "on branch master", etc.
+
+14. git message - go to http://udacity.github.io/git-styleguide/ for explanation
+	
+	type (feat, fix, docs, style, refactor, test, chore): subject
+
+	body (starts with CAP - no period on end - 
+	imperitive mode, like "change" instead of 
+	"changed")
+
+	footer (Resolves: #123)
+
+
+
+
+
+
+
+
+
+
+
+
+
