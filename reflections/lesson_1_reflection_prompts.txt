@@ -1,0 +1,46 @@
+How did viewing a diff between two versions of a file help you see the bug that
+was introduced?
+
+    Look at the specific differences between files and compare. 
+
+How could having easy access to the entire history of a file make you a more
+efficient programmer in the long term?
+
+    You could try things, but then go back to a previous version
+     if you went down a path that didn't work.
+     Also, if another person made a change in your file and broke it,
+     you could go back to an older version.
+
+What do you think are the pros and cons of manually choosing when to create a
+commit, like you do in Git, vs having versions automatically saved, like Google
+docs does?
+
+    Git pro - you can save at logical points where things are working
+    Git con - you need to be conscientious about saving
+    Google pro - it adds extra points in case you forget to save things
+    Google con - save points may not make sense if partway through a task
+
+Why do you think some version control systems, like Git, allow saving multiple
+files in one commit, while others, like Google Docs, treat each file separately?
+
+    Git - multiple files are dependant on each other
+    Google Docs - files are not connected to/depending on each other
+
+How can you use the commands git log and git diff to view the history of files?
+
+    Use 'git log' to list commits for the dir that you're in
+    Use 'git diff commit#1 commit#2' to compare two commits
+     (you will see -hthshkssk etc. in red for lines deleted; you 
+     will see +isisgigi etc. in green for lines added)
+
+How might using version control make you more confident to make changes that
+could break something?
+
+    This would be very reassuring - to know that I can 
+    always go back to an older version of a file and 
+    then find the differences between files. 
+
+Now that you have your workspace set up, what do you want to try using Git for?
+
+    I would like to be able to use Git to store and track the files for my WordPress sites. I would especially like to try it on our new website - I could clone _underscores and use it as a basis for building a new template :)
+    
