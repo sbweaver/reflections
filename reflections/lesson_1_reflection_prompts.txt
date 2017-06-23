@@ -43,4 +43,6 @@ could break something?
 Now that you have your workspace set up, what do you want to try using Git for?
 
     I would like to be able to use Git to store and track the files for my WordPress sites. I would especially like to try it on our new website - I could clone _underscores and use it as a basis for building a new template :)
+
+    a small change
     
