@@ -1,4 +1,5 @@
 classroom.Udacity.com/courses/ud775/
+GIT and GITHUB
 
 LESSON 2
 
