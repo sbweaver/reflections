@@ -10,4 +10,18 @@ LESSON 2
 	If you don't do this, you won't be able to track
 	your file versions.
 
-2. 
+2. How can you use the staging area to make sure you 
+have one commit per logical change?
+
+	After each logical change, you use "git add" to 
+	add the files affected to the staging area, then 
+	"git commit"
+
+3. What are some situations when branches would be helpful in keeping your history organized? How would branches help?
+
+	Branches would allow me to try out areas and 
+	still be able to go back to a working point; 
+	I could name the branches so that they make 
+	sense with whatever changes I was trying
+
+4. 
