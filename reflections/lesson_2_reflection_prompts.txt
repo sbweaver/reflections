@@ -29,3 +29,12 @@ have one commit per logical change?
 	I can see where changes occured in the history - 
 	I can also tell what changes are missing from 
 	particular branches
+
+5. What is the result of merging two branches together? Why do we represent it in the diagram the way we do?
+
+	the result is that we now have both functionality -
+	we use the diagram so that we can see where each 
+	change was introduced and go back to any point in 
+	either branch
+
+	
