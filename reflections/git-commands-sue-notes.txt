@@ -98,11 +98,39 @@ files", "on branch master", etc.
 
 	footer (Resolves: #123)
 
+15. "git diff" = tells what differences there are 
+between the staging area and the working dir
 
+16. "git diff --staged" = shows differences between 
+staging area and last commit
 
+17. "git reset --hard" = restores working dir and 
+staging area (BE CAREFUL WITH THIS)
 
+18. "git branch branch-name" = creates a new 
+branch of the code with the argument "branch-name"
 
+19. "git checkout branch-name" = checks out the 
+new branch that you created
 
+20. "git log --graph --oneline master branch-one 
+branch-two" = shows the branches in a graph
+
+21. "git merge master other-branch" = merges the 
+master branch with another branch
+
+22. "git show commit-id" = shows the difference 
+between the commit entered and its parent commit
+
+23. "git branch -d other-branch" = deletes the 
+name of the other branch, though it does not 
+delete its commits - they are included in the 
+master branch
+
+24. "git merge --abort" = aborts the merge
+
+25. "git log -n 1" = tell it to only show the last 
+commit ("-n" stands for number of commits to show)
 
 
 
