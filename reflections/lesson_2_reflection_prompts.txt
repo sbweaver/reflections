@@ -37,4 +37,12 @@ have one commit per logical change?
 	change was introduced and go back to any point in 
 	either branch
 
+6. What are the pros and cons of Git’s automatic merging vs. always doing merges manually?
+
+	Git's automerge makes committing faster (PRO), but 
+	you wouldn't necessarily see if a bug is 
+	introduced by someone else's code because 
+	you aren't asked to review every addition (CON) 
+
 	
+
