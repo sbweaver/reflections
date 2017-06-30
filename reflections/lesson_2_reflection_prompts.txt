@@ -24,4 +24,8 @@ have one commit per logical change?
 	I could name the branches so that they make 
 	sense with whatever changes I was trying
 
-4. 
+4. How do the diagrams help you visualize the branch structure?
+
+	I can see where changes occured in the history - 
+	I can also tell what changes are missing from 
+	particular branches
