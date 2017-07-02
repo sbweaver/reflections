@@ -132,7 +132,19 @@ master branch
 25. "git log -n 1" = tell it to only show the last 
 commit ("-n" stands for number of commits to show)
 
+26. "git remote" = checks for any git repositories 
+located on github.com
 
+27. "git remote add origin https://github.com/sbweaver/reflections.git" = creates the git 
+repository for the dir that you are in on github 
+(if this is the first save, naming it "origin" is
+traditional)
+
+28. "git remove -v" = v is for verbose - it will 
+tell you both the "push" and "fetch" addresses for 
+your repository on Git
+
+29. 
 
 
 
