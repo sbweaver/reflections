@@ -144,7 +144,8 @@ traditional)
 tell you both the "push" and "fetch" addresses for 
 your repository on Git
 
-29. 
+29. "git pull origin master" = pulls change from 
+GitHub repository into your local repository
 
 
 
