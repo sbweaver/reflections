@@ -147,6 +147,34 @@ your repository on Git
 29. "git pull origin master" = pulls change from 
 GitHub repository into your local repository
 
+30. "git push" = pushes latest commits from local 
+repository to the GitHub repository
+
+31. "bash file_name_with_changes.sh https://github.com/sbweaver/my_git_fork_repository.git" = 
+add a commit to the Git repository on GitHub using 
+a .sh file with changes
+
+32. "remote" is the connection set up between the 
+local and GitHub repositories - the first "remote" 
+is usually named "origin"
+
+33. "git pull origin master"
+= "git fetch origin" followed by 
+"git merge master origin/master"
+
+34. "git branch -a" = shows me the remotes, both the 
+origin/master (remotes/origin/HEAD) and the master 
+(remotes/origin/master)
+
+35. "git fetch origin" = updates all of the branches 
+on the local origin remote
+
+36. "git log origin/master" OR "git diff origin/master master" 
+to see the difference between the two local commits
+
+37. "git merge master origin/master" = combines commits 
+need to run "git add file" and "git commit" 
+afterwards to commit the changes in merge
 
 
 
