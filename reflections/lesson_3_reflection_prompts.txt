@@ -44,6 +44,18 @@ How would you collaborate without using Git or GitHub? What would be easier, and
 	would be even harder if you tried to track/note 
 	all of your changes.
 
+When would you want to make changes in a separate branch rather than directly in master? What benefits does each approach have?
+
+	When you are working on a new feature while others 
+	are simultaneously working on features or if you 
+	were wanting to have a different version of the 
+	code - like for the easy version of the Asteroids 
+	game. Working in the master is easier if it's only 
+	you but working in branches makes sense for 
+	collaboration or if you want to keep your master 
+	useable while also experimenting in a branch on 
+	the side.
+
 
 
 
