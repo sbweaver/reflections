@@ -84,7 +84,7 @@ working dir to the staging area
 .git file after running "git init" - there aren't any 
 commits until you run "git commit" though)
 
-13. "git status" = shows me what it happenning in a 
+13. "git status" = shows me what is happening in a 
 dir that is a GIT repository - can show "Untracked
 files", "on branch master", etc.
 
@@ -105,7 +105,7 @@ between the staging area and the working dir
 staging area and last commit
 
 17. "git reset --hard" = restores working dir and 
-staging area (BE CAREFUL WITH THIS)
+staging area (BE CAREFUL WITH THISgi)
 
 18. "git branch branch-name" = creates a new 
 branch of the code with the argument "branch-name"
@@ -176,6 +176,12 @@ to see the difference between the two local commits
 need to run "git add file" and "git commit" 
 afterwards to commit the changes in merge
 
+38. Fast-Forward merge = happens when you're merging 
+"a" into "b" - "a" must be an ancestor of "b" (you do 
+this whenever you pull or push changes from one 
+repository to another and there are no conflicts)
 
-
+39. "git push origin branch-with-change-to-merge" =
+this pushes my new commit to GitHub so that I can 
+request it be pulled into the origin/master
 
