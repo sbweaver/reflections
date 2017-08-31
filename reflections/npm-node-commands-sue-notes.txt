@@ -1,0 +1,37 @@
+NPM and NODE.js Commands and Notes (Sue Baily Weaver)
+
+1) "npm install --save grunt-sass"  = command to install a package (grunt-sass) - add "sudo " to the beginning on Mac
+
+2) "npm init" = installs npm within the folder that you are in - goes through series of questions needed to build "package.json" file
+
+3) "npm install -save-dev whatever-you-are-installing" = installs the package as a developer dependency (something you are using only to develop your app - the app does not need it to run so it doesn't need to be installed on the production server)
+
+4) "npm list" = will show you everything that is installed in current dir (like "ls")
+
+5) "npm -g list" = shows everything that is installed on your system
+
+6) "npm install" = (first, you have gone into your package.json file and specified specific versions for packages like, 1.4.5, and you want those specific versions installed - when you run the command it installs them)
+
+NOTE: if a version has "^1.5.6" the carot at the beginning indicates that you want the latest version installed
+
+7) "npm outdated" = shows you any packages that are outdated, what version is Current, then Wanted and then Latest. 
+
+8) "npm update" = if you add the carot (^) back in before the version number it will update to the latest version when this command is run
+
+9) "npm uninstall grunt-whatever" = temporarily Uninstall a package - if you then run, "npm install" it will reinstall (doesn't remove the entry in package.json file)
+
+10) "npm uninstall --save-dev grunt-whatever" = permanently uninstall a package (removes the entry in package.json file)
+
+11) "npm prune" = deletes any folders/packages that are not included in your package.json file
+
+12) CTRL C = stops a task from running in Command Prompt and brings back command prompt
+
+
+
+
+
+
+
+
+
+

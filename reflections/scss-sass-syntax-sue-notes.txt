@@ -1,0 +1,9 @@
+SCSS / SASS SYNTAX COMMANDS
+
+1) @import "file-name.scss";  - - for importing other SCSS files into your stylesheet
+
+2) @include mixinName(parameters-to-pass); - - for including a mixin
+
+3) @extend .class-name - - applies the styles of ".class-name" to current element/class/id
+
+4) &:hover { background: $lightblue; } - - adds a hover pseudo-class to current element/class

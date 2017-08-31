@@ -50,7 +50,7 @@ For permissions - - -user(owner)-group-other(world) (-rwxrw-r-- means user who c
 12. "?" is a wild card character that indicates only one character ("sp??t" would match "sport" but not "spat")
 13. ACLs are ACCESS CONTROL LISTS (Look this up if you need more robust user control)
 14. "groups" = tells you which groups you are in as a user
-15. Running a program (Example: Sublime)
+15. Running a program (Example: Sublime - i'm escaping the spaces in the path with \)
 	"C:/Program\ Files/Sublime\ Text\ 2/sublime_text.exe"
 
 
@@ -79,6 +79,14 @@ GIT COMMANDS:
 
 11. "git add file-name.txt" = adds a file from the 
 working dir to the staging area
+OR
+"git add ." = adds all files in the current directory
+(create a .gitignore file at the root of the directory so that particular files are ignored)
+
+11b. "git commit" = to commit files that have been added to the staging area (will take you to your file editor to enter the description of your change to commit)
+OR
+"git commit -m "First Commit"" = to make your first commit
+OR "git commit -m "Describe the change you made"" = lets you bypass opening the file editor and adds the description to your commit in one step instead of two
 
 12. "ls -a" = shows all files in the dir (you see a 
 .git file after running "git init" - there aren't any 
@@ -184,4 +192,8 @@ repository to another and there are no conflicts)
 39. "git push origin branch-with-change-to-merge" =
 this pushes my new commit to GitHub so that I can 
 request it be pulled into the origin/master
+
+40. Use up arrow to scroll back through previously used commands (VERY HANDY)
+
+
 
