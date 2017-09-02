@@ -1,9 +1,25 @@
 SCSS / SASS SYNTAX COMMANDS
 
+IMPORT OTHER STYLESHEETS
 1) @import "file-name.scss";  - - for importing other SCSS files into your stylesheet
 
+ADD MIXIN TO CLASS
 2) @include mixinName(parameters-to-pass); - - for including a mixin
 
+APPLY STYLES FROM ANOTHER CLASS TO ELEMENT
 3) @extend .class-name - - applies the styles of ".class-name" to current element/class/id
 
+ADD EXTRA STYLES TO THIS ELEMENT AND IT'S SUBSETS
 4) &:hover { background: $lightblue; } - - adds a hover pseudo-class to current element/class
+
+COMMENTS
+5) /*! comment */ - - the "!" makes the comment show even in "compressed" mode (style='compressed';)
+
+6) // - - Javascript style comment that won't be carried through to the production (.css) file
+
+IMAGE PLACEHOLDER
+7) http://placehold.it/500x500/
+
+LISTS
+8) $roundness: 20px 0 10px 0; - - Sets variable to list (can have commas or not)
+	border-radius: nth($roundness, 1); (uses the 1st value in the variable list as the border-radius)
