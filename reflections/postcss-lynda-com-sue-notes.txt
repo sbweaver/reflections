@@ -1,5 +1,14 @@
 POSTCSS Notes - Lynda.com class by Ray Villalobos
 
+Created a Git clone:
+(this one included all of the different forks)
+
+1) git clone --bare https://github.com/file-name.git .git
+2) git config --bool core.bare false
+3) git reset --hard
+
+
+---------------------------
 
 "npm install gulp-postcss --save-dev"
 http://github.com/postcss/
