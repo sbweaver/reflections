@@ -23,3 +23,44 @@ IMAGE PLACEHOLDER
 LISTS
 8) $roundness: 20px 0 10px 0; - - Sets variable to list (can have commas or not)
 	border-radius: nth($roundness, 1); (uses the 1st value in the variable list as the border-radius)
+
+	NOTE - lists are not 0 indexed (they start at 1 instead of 0 like most other programming languages)
+
+LOOPS
+http://sass-lang.com/documentation/file.SASS_REFERENCE.html#each-directive
+
+@while EXAMPLE:
+
+$i: 6;
+@while $i > 0 {
+  .item-#{$i} { width: 2em * $i; }
+  $i: $i - 2;
+}
+
+compiles to:
+
+.item-6 {
+  width: 12em; }
+
+.item-4 {
+  width: 8em; }
+
+.item-2 {
+  width: 4em; }
+
+
+FIRST WAY OF DOING BUTTONS:
+$color-btn-names: 'default', 'hot', 'cool';
+$color-btn-values: $color-main, $red, $blue;
+
+@each $name in $color-btn-names {
+    $i: index($color-btn-names, $name);
+
+    .btn-#{$name} {
+        @extend %btn;
+        background-color: nth($color-btn-values, $i);
+    }
+}
+
+SECOND WAY OF DOING BUTTONS:
+

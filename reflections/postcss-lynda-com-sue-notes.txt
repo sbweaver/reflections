@@ -1,0 +1,87 @@
+POSTCSS Notes - Lynda.com class by Ray Villalobos
+
+
+"npm install gulp-postcss --save-dev"
+http://github.com/postcss/
+
+(each of these plugins have to be installed and then a variable must be created with the require statement like so:)
+var postcss = require('gulp-postcss'),
+autoprefixer = require('autoprefixer');
+
+------
+
+CSSNANO.co - is a part of POSTCSS that minifies your CSS for the Production build
+(can be installed by itself using "npm install gulp-cssnano --save-dev" OR as below it can be installed within POSTCSS by running "npm install cssnano --save-dev" if you've already installed POSTCSS) 
+
+gulp.task('css', function() {
+  gulp.src(source + 'style.css')
+  .pipe(postcss([
+    autoprefixer(),
+    cssnano(),
+    cssnext()
+  ]))
+  .on('error', gutil.log)
+  .pipe(gulp.dest(dest + 'css'));
+});
+
+------------
+
+AUTOPREFIXER - to create css with all prefixes
+
+"npm install autoprefixer --save-dev"
+
+
+
+-------------
+
+cssnext.io
+(allows you to use future CSS features today)
+"npm install cssnext"
+
+
+--------------
+
+npm install postcss-color-function
+http://github.com/postcss/postcss-color-function/
+(can be run by itself or as a part of POSTCSS)
+
+-------------
+
+PreCSS (not exactly SASS)
+https://github.com/jonathantneal/precss
+allows you to create:
+variables
+loops
+mixins
+conditionals
+extends
+
+"npm install precss --save-dev"
+
+Syntax for PreCSS is different from SASS: 
+
+1) less parentheses:
+
+"@define-mixin backImage($image, $height: 100vh, $bgPos: center center) {...}"
+
+becomes:
+
+"@define-mixin backImage $image, $height: 100vh, $bgPos: center center {...}"
+
+2) @for/@each/@extend - - no parentheses
+
+3) calling mixins:
+
+.header { 
+   @mixin backImage('../images/running.jpg', 500px);
+ }
+
+becomes:
+
+.header { 
+   @mixin backImage '../images/running.jpg', 500px;
+ }
+
+
+
+
