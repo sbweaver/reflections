@@ -1,0 +1,878 @@
+Javascript (JS) Essentials with Morten Rand-Hendrickson
+
+2.3
+Javascript render blocking = rendering of page stops when it encounters a JS file until it has been downloaded and executed
+
+HTTP/2 will be changing this - more than one thing will be able to run similtaneously
+
+Javascript Loading Methods
+- Right away loading (HTML parsing, JS download, JS execution, HTML parsing)
+- Asynchronous loading <script src="scripts.js" async></script> 
+    (HTML parsing / JS download, JS execution, HTML parsing)
+- Defered loading <script src="scripts.js" defer></script>
+
+--------------
+
+2.4
+JAVASCRIPT BASIC RULES:
+1) JS is case sensitive
+
+2) JS uses camelCase
+
+// Variables start with lowercase letter:
+   var greenDuck;
+// Objects and Classes start with uppercase letter:
+   var date = Date();
+// Constants are all-caps:
+   const = CONSTANTLYUPPERCASE;
+
+3) Whitespace Matters (to Humans), but not to machines
+
+4) End Each Statement with a Semicolon (you don't have to but it makes code more readable)
+
+5) Use Comments Liberally
+// A single-line comment
+/* A multi-line
+comment */
+
+-----------------
+
+3.1
+
+Variables can't start with a number
+
+CREATE AND ASSIGN VARIABLES:
+var a = 5;
+var b = 4;
+var sum = a + b;
+  OR
+var a, b, sum;
+a = 5; 
+b = 4;
+sum = a + b;
+
+Variables can be created in browser without "var" 
+   (don't do this - it creates global variables that could muck up other code)
+
+-----------------
+
+3.2
+DATA TYPES:
+- Numeric
+- String
+- Boolean
+- null
+- undefined
+- Symbol
+
+NUMERIC
+var number = 1;
+var integer = 3.14159;
+var negNumber = -1;
+var negInteger = -3.14159265359;
+
+STRING
+var string = "this is it";
+var mixedQuote = 'This keeps the "quotation marks.';
+var excQuote = "Quotes can also be \"escaped\".";
+
+BOOLEAN 
+true and false
+
+NULL
+var myEmptyVariable = null;
+(variable is set but empty)
+
+UNDEFINED
+variable that has been declared but not set to anything
+
+To FIND DATA TYPE for VARIABLE:
+console.log(typeof variableName);
+
+(browser may call null variable "object" - it is really null)
+
+-----------
+
+3.3
+OPERATORS
+= Assignment operator
++ - * / Math operators
+   (uses Algebra rules; * comes before +)
+   (Please Excuse My Dear Aunt Sally:
+   Parentheses,
+   Exponents,
+   Multiplication, 
+   Division,
+   Addition, 
+   Subtraction)
+
+SHORTHAND MATH
+a = a + 4;  // Longform version
+a += 4; // Shorthand version
+a *= 4; (can be done for += -= *= /=)
+
+a = a + 1;  // Longform version
+a++;  // Shorthand version with unary operator
+
+a = a - 1;  // Longform version
+a--; // Shorthand version with unary operator
+
+console.log(a++) - writes value of "a" then adds 1
+console.log(++a) - adds 1 then writes value of "a"
+
+---------------------
+
+3.4
+STRINGS and NUMBERS
+
+var a = 4;
+var b = "5";
+var sum = a + b = 45 (strings are concatenated)
+
+NaN = not a number
+
+------------------
+
+3.5
+CONDITIONAL STATEMENTS AND LOGIC
+
+if (some condition) {
+	Do something. This is the Code block.
+}
+
+== checks for equality (5 can be equal to "5" - JS is somewhat lenient)
+=== checks for identical equality (5 is not equal to "5" because technically one is a number and one is a string)
+
+<=  less than or equal to
+>=  greater than or equal to
+!=  is not equal to
+!==  is not identically equal to
+
+THESE ARE ALL THE SAME:
+if ( a == false ) {} // Longhand
+if ( a != true ) {} // Reverse psychology
+if ( !a ) {}  // Shorthand. Literally "NOT a".
+
+------------------------
+
+3.6
+ADVANCED CONDITIONS AND LOGIC
+
+// If a equals b AND c equals d:
+if ( a == b && c == d ) {};
+
+// If a equals b OR c equals d (or both):
+if ( a == b || c == d ) {};
+
+// If a equals b XOR c equals d (not both):
+if ( ( a == b || c == d ) && ( ( a == b ) != ( c == d ) )  {};
+
+TERNARY OPERATOR:
+( condition ? do-this-if-true : do-this-if-false )
+EX:
+a == b ? console.log("Match") : console.log("No match");
+
+------------------
+
+3.7
+ARRAYS (are objects)
+
+var pens;
+pens = ["red", "blue", "green", "orange"];
+OR
+pens = new Array("red", "blue", "green", "orange");
+console.log(pens);
+
+Each item in array can be different type.
+var mixedBag = ["keys", 5, false, 568, "one more thing"];
+
+var fourthPen = pens[3];  // this would be 568 for above array
+
+-------------
+
+3.8
+PROPERTIES AND METHODS IN ARRAYS
+(arrays are objects, and objects have properties and methods)
+
+// PROPERTIES:
+// Get a property of an object by name:
+// console.log("Array length: ", pens.length);
+
+// METHODS: - functions that we can use to change the values in an Array
+// pens.reverse();
+    (puts values in reverse order)
+
+// pens.shift();
+    (removes first value from Array)
+
+// pens.unshift("purple", "black");
+    (adds values to beginning of Array)
+
+// pens.pop();
+    (removes last value of Array)
+
+// pens.push("pink", "prussion blue");
+    (adds values to end of Array)
+
+// pens.splice(pos, n); 
+    (removes the "number" of values beginning at the "position")
+   EX: pens = new Array("red", "blue", "green", "orange");
+   pens.splice(2, 1); -- removes "green"
+   
+// var newPens = pens.slice();
+    (newPens is made as a copy of the pens Array)
+
+// var result = pens.indexOf("what-we-are-searching-for", index-of-where-to-start-searching-in-array);
+    EX: pens = new Array("orange", "red", "blue", "green", "orange");
+    var result = pens.indexOf("orange", 2); 
+    result = 4
+    console.log("The value is: ", pens[result]);
+       would return
+    The value is: orange
+
+// var arrayString = pens.join();
+    EX: console.log("String from above array: ", arrayString);
+    Outputs:
+    String from above array: orange,red,blue,green,orange
+// var arrayString = pens.join(" | ");
+	Outputs:
+	String from array: orange | red | blue | green | orange
+
+http://goo.gl/G4cTqk
+
+--------------------
+
+4.1
+FUNCTIONS
+- Named functions
+- Anonymous functions
+- Immediately invoked function expressions
+
+-----------------
+
+4.2
+BUILD A FUNCTION
+function findBiggestFraction() {
+  a>b ? console.log("a: ", a) : console.log("b: ", b);
+}
+
+var a = 3/4;
+var b = 12/13;
+
+findBiggestFraction();
+
+-----------------
+
+4.3
+ADD ARGUMENTS
+function findBiggestFraction(a,b) {
+  a>b ? console.log("a: ", a) : console.log("b: ", b);
+}
+
+var firstFraction = 3/4;
+var secondFraction = 12/13;
+
+findBiggestFraction(firstFraction,secondFraction);
+
+------------
+
+4.4
+RETURN VALUES FROM FUNCTIONS
+
+function findBiggestFraction(a,b) {
+    var result;
+    a>b ? result = ["firstFraction", a] : result = ["secondFraction", b];
+    return result;
+}
+
+---------------------
+
+4.5
+ANONYMOUS FUNCTIONS
+(adds a function to a variable - variable looks like/includes a function)
+
+var a = 5/7;
+var b = 18/25;
+
+var theBiggest = function() {
+  var result;
+  a>b ? result = ["a", a] : result = ["b", b];
+  console.log(result);
+}
+
+theBiggest();
+
+OR
+
+var theBiggest = function(a,b) {
+  var result;
+  a>b ? result = ["a", a] : result = ["b", b];
+  return result;
+}
+
+console.log(theBiggest(7/9,13/25));
+
+
+------------------
+
+4.6 
+
+IMMEDIATELY INVOKED FUNCTIONAL EXPRESSIONS
+(runs immediately where it is located in the code and provides a direct output - be careful with these)
+
+var theBiggest = (function(a,b) {
+  var result;
+  a>b ? result = ["a", a] : result = ["b", b];
+  return result;
+})(7/9,13/25);
+
+console.log(theBiggest);
+
+OR (using variables - variables MUST be defined BEFORE function)
+
+var firstFraction = 7/9;
+var secondFraction = 13/25;
+
+var theBiggest = (function(a,b) {
+  var result;
+  a>b ? result = ["a", a] : result = ["b", b];
+  return result;
+})(firstFraction,secondFraction);
+
+console.log(theBiggest);
+
+-----------------------
+
+4.7
+VARIABLE SCOPE
+
+Variables declared outside of a function are GLOBAL.
+Variables declared inside of a function are LOCAL - they are used, then discarded when we leave the scope (function has run).
+
+Variables created within functions without using "var" become global variables. For that reason, ALWAYS use the var method.
+
+---------------------
+
+4.8
+ES2015 NEW VARIABLES:
+
+const Variable: (cannot be changed)
+
+const MYCONSTANT = 10;
+
+---
+
+let Variable (block scope variable - smaller scope than var)
+
+VERSION 1:
+function logScope() {
+  var localVar = 2;
+
+  if (localVar) {
+    var localVar = "I'm different!";
+    console.log("nested localVar: ", localVar);
+  }
+
+  console.log("logScope localVar: ", localVar);
+}
+
+logScope();
+ 
+VERSION 1 RESULT:
+nested localVar: I'm different!
+logScope localVar: I'm different!
+
+VERSION 2:
+function logScope() {
+  let localVar = 2; (could also be "var localVar = 2;")
+
+  if (localVar) {
+    let localVar = "I'm different!";
+    console.log("nested localVar: ", localVar);
+  }
+
+  console.log("logScope localVar: ", localVar);
+}
+
+logScope();
+ 
+VERSION 2 RESULT:
+nested localVar: I'm different! (written within nested "if" scope)
+logScope localVar: 2 (this variable doesn't get changed by let variable declaration in nested function)
+
+-------------------
+
+4.9
+OBJECTS
+
+var course = new Object();  
+(I thought Objects were supposed to start with an Uppercase letter? - see next lesson - the function/object? is Course?)
+
+var course = {
+  title: "JavaScript Essential Training",
+  instructor: "Morten Rand-Hendrickson",
+  level: 1,
+  published: true,
+  views: 0,
+  updateViews: function() {
+    return ++course.views;
+  }
+}
+
+console.log(course.views);
+course.updateViews();
+console.log(course);
+
+------------------------
+
+4.10
+OBJECT CONSTRUCTORS
+
+function Course(title,instructor,level,published,views) {
+  this.title = title;
+  this.instructor = instructor;
+  this.level = level;
+  this.published = published;
+  this.views = views;
+  this.updateViews = function() {
+    return ++this.views;
+  };
+}
+
+var courses;
+
+var course01 = new Course("Javascript Essential Training", "Morten Rand-Hendrickson", 1, true, 0);
+var course02 = new Course("Up and running", "Morten Rand-Hendrickson", 1, true, 0);
+
+console.log(course01);
+console.log(course02);
+
+--OR--
+
+function Course(title,instructor,level,published,views) {
+  this.title = title;
+  this.instructor = instructor;
+  this.level = level;
+  this.published = published;
+  this.views = views;
+  this.updateViews = function() {
+    return ++this.views;
+  };
+}
+
+// (POPULATE an Array with Course Objects)
+var courses = [
+  new Course("Javascript Essential Training", "Morten Rand-Hendrickson", 1, true, 0),
+  new Course("Up and running", "Someone Else", 1, true, 123456)
+];
+console.log(courses);
+
+// Next you can find specifics this way
+console.log(courses[1].instructor); 
+//(Someone Else)
+console.log(courses[1].updateViews()); 
+//(123457)
+
+----------------
+
+4.11
+DOT NOTATION VS. BRACKET NOTATION
+(brackets are for when your property name needs to be converted to a string - like if name has a colon in it)
+
+DOT NOTATION      BRACKET NOTATION
+course.title      course["WP:image"]
+
+------------------------
+
+4.12
+CLOSURES
+(a function within a function that relies on outside variables to work)
+
+function doSomeMath() {
+  var a = 5;
+  var b = 4;
+  function multiply() {
+    var result = a*b;
+    return result;
+  }
+  return multiply;
+}
+
+var theResult = doSomeMath();
+
+console.log("The result as variable: ", theResult);
+console.log("The result as a function: ", theResult());
+// theResult as a function answer of 20 shouldn't be there because the variables of doSomeMath should be shut down after doSomeMath runs, but the browser holds them open because it know that the "multiply" function is relying on those two variables (a & b)
+
+// FUNCTION TO CONVERT TO EMS FROM DESIRED PIXEL SIZES
+
+function giveMeEms(pixels) {
+  var baseValue = 16;
+
+  function doTheMath() {
+    return pixels/baseValue;
+  }
+
+  return doTheMath;
+}
+
+var smallSize = giveMeEms(12);
+var mediumSize = giveMeEms(18);
+var largeSize = giveMeEms(24);
+var xlargeSize = giveMeEms(32);
+
+console.log("Small size: ", smallSize() );
+console.log("Medium size: ", mediumSize() );
+console.log("Large size: ", largeSize() );
+console.log("Extra Large size: ", xlargeSize() );
+
+// FOR MORE INFO:
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures
+
+----
+// This is cool below - A COUNTER:
+
+function makeAdder(x) {
+  return function(y) {
+    return x + y;
+  };
+}
+
+var add5 = makeAdder(5); // x is set to 5
+var add10 = makeAdder(10);  // x is set to 10
+
+console.log(add5(2));  // 7
+console.log(add10(2)); // 12
+
+---
+// FOR CHANGING TEXT SIZE ON PAGE
+
+function makeSizer(size) {
+  return function() {
+    document.body.style.fontSize = size + 'px';
+  };
+}
+
+var size12 = makeSizer(12);
+var size14 = makeSizer(14);
+var size16 = makeSizer(16);
+
+document.getElementById('size-12').onclick = size12;
+document.getElementById('size-14').onclick = size14;
+document.getElementById('size-16').onclick = size16;
+
+// PRIVATE METHODS WITH CLOSURES - THE MODULE PATTERN - Creating a counter that can have multiple instances running with different values
+
+var makeCounter = function() {
+  var privateCounter = 0;
+  function changeBy(val) {
+    privateCounter += val;
+  }
+  return {
+    increment: function() {
+      changeBy(1);
+    },
+    decrement: function() {
+      changeBy(-1);
+    },
+    value: function() {
+      return privateCounter;
+    }
+  }  
+};
+
+var counter1 = makeCounter();
+var counter2 = makeCounter();
+alert(counter1.value()); /* Alerts 0 */
+counter1.increment();
+counter1.increment();
+alert(counter1.value()); /* Alerts 2 */
+counter1.decrement();
+alert(counter1.value()); /* Alerts 1 */
+alert(counter2.value()); /* Alerts 0 */
+
+--------------------
+
+5.1
+BOM = Browser Object Model
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference
+
+window.document  is used to access the document from BOM 
+document  is used for JavaScript because it functions inside of the window (window is assumed - becomes DOM [Document Object Model])
+
+NODES (in a Node Tree) - document, html, head, meta, body, a, nav, main, title, li, etc.
+
+-----------------
+
+5.2
+TARGET ELEMENTS in the DOM with querySelector methods
+
+DOM PROPERTIES:
+document.body;
+document.title;
+document.URL;
+
+OLD DOM METHODS:
+document.getElementsByID("some-ID");
+document.getElementsByClassName("classname");
+document.getElementsByTagName("HTML tag");
+document.getElementsByTagNameNS("???");
+
+NEW DOM METHODS (USE THESE PRIMARILY):
+/* Get the FIRST element matching specified selector(s): */
+document.querySelector(".main-nav a")
+/* Get ALL elements matching specified selector(s): */
+document.querySelectorAll(".post-content p")
+
+---------------
+
+5.3
+ACCESS AND CHANGE ELEMENTS
+
+document.querySelector(".main-nav a").innerHTML
+document.querySelector(".main-nav a").outerHTML
+
+//change main-title text
+document.querySelector(".main-title").innerHTML = "My New Title!"
+
+//change ID
+document.querySelector("#showcase").id = "slideshow"  
+
+// returns string of all masthead classes including itself ("masthead clear")
+document.querySelector(".masthead").className  
+
+// returns list in DOM Token List, or an Array
+document.querySelector(".masthead").classList  
+
+CHECK OUT LIST OF PROPERTIES TO SEE WHICH YOU CAN CHANGE
+(many are read-only -- section 5.4 covers methods that can be used to change elements that can't be changed this way)
+
+https://developer.mozilla.org/en-US/docs/Web/API/Element
+
+-----------------
+
+5.4
+ACCESS AND CHANGE CLASSES
+
+METHODS
+// add - additional class to element
+document.querySelector(".masthead").classList.add("new-class")
+
+// remove - class from element
+document.querySelector(".masthead").classList.remove("new-class")
+
+// retrieve - specific class by number in array
+document.querySelector(".masthead").classList[1]
+
+// toggle - class name - first removes, then restores, each time you run this method
+document.querySelector(".new-class").toggle("masthead")
+
+// contains -
+document.querySelector(".new-class").contains("masthead")
+
+-------------
+
+5.5
+ACCESS AND CHANGE ATTRIBUTES
+
+// hasAttribute - checks to see if present
+(Returns value true or false)
+element.hasAttribute
+
+// getAttribute - returns value
+element.getAttribute
+
+// setAttribute - has two arguments: name, value
+element.setAttribute
+
+// removeAttribute - has two arguments: name, value
+element.removeAttribute
+
+---------------
+
+5.6
+ADD DOM ELEMENTS
+
+1. Create the element
+2. Create the text node that goes inside the element
+3. Add the text node to the element
+4. Add the element to the DOM tree
+
+METHODS NEEDED TO DO THIS:
+
+.createElement(); // Create an element.
+.createTextNode(); // Create text node.
+.appendChild(); // Place one child node inside another.
+
+https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement
+https://developer.mozilla.org/en-US/docs/Web/API/Document/createTextChild
+https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement
+
+EXAMPLE:
+const FEATURED = document.querySelector(".featured-image");
+const THEIMAGE = FEATURED.querySelector("img");
+
+var altText = THEIMAGE.getAttribute("alt");
+
+var captionElement = document.createElement("figcaption"); 
+// created but not placed anywhere
+
+var captionText = document.createTextNode(altText); 
+// assign altText to the captionText variable
+
+captionElement.appendChild(captionText); 
+// set the captionElement to have a child that is the text as captionText
+
+console.log(captionElement); 
+// writes it out in the console so that we can see the <figcaption></figcaption>
+
+FEATURED.appendChild(captionElement); 
+// places the figcaption element inside of the featured-image
+
+THEIMAGE.setAttribute("alt",""); 
+// clears out the alt tag so that screen readers won't read the same info twice
+
+--- NEW METHOD BELOW --- Not yet supported in all browsers (polyfill for IE 9.0 and lower)
+https://developer.mozilla.org/en-US/docs/Web/API/ParentNode/append
+
+const FEATURED = document.querySelector(".featured-image");
+const THEIMAGE = FEATURED.querySelector("img");
+
+var altText = THEIMAGE.getAttribute("alt");
+
+var captionElement = document.createElement("figcaption"); // created but not placed anywhere
+
+captionElement.append(altText); // automatically places altText inside the figcaption as a text node
+FEATURED.append(captionElement); // places captionElement (figcaption) inside of featured-image
+
+THEIMAGE.setAttribute("alt",""); // clears out the alt tag so that screen readers won't read the same info twice
+
+-----------------------
+
+5.7
+APPLY INLINE CSS TO AN ELEMENT
+
+document.querySelector(".cta a").style 
+// shows all inline styles of an element
+
+EXAMPLE:
+document.querySelector(".cta a").style.color = "green";
+// sets color to green
+
+TWO-WORD attributes become camelCase:
+document.querySelector(".cta a").style.backgroundColor = "blue";
+// sets background-color to blue
+
+ALL STYLES FOR ELEMENT
+document.querySelector(".cta a").style.cssText = "padding: 1em; color: #fff;";
+// changes whole inline CSS style string for that element
+
+------
+
+INLINE CSS - An Attribute Application
+
+.hasAttribute("style"); // Does the element have style?
+
+.getAttribute("style"); // Get the inline styles.
+
+.setAttribute("style", "color:red"); // Add CSS property.
+
+.removeAttribute("style"); // Remove inline styles.
+
+EXAMPLE:
+document.querySelector(".cta a").setAttribute("style","padding: 2em");
+
+---------------
+
+6.1
+CREATE AN ANALOG CLOCK
+
+const HOURHAND = document.querySelector("#hour");
+const MINUTEHAND = document.querySelector("#minute");
+const SECONDHAND = document.querySelector("#second");
+
+var date = new Date();
+console.log(date);
+let hr = date.getHours();
+let min = date.getMinutes();
+let sec = date.getSeconds();
+console.log("Hour: " + hr + " Minute: " + min + " Second: " + sec);
+
+let hrPosition = (hr*360/12)+(min*((360/12)/60))+(sec*((360/360)/60));
+let minPosition = (min*360/60)+(sec*((360/60)/60));
+let secPosition = sec*360/60;
+
+function runTheClock() {
+  hrPosition = hrPosition+((30/60)/60);
+  minPosition = minPosition+.1;
+  secPosition = secPosition+6;
+
+  HOURHAND.style.transform = "rotate(" + hrPosition + "deg)";
+  MINUTEHAND.style.transform = "rotate(" + minPosition + "deg)";
+  SECONDHAND.style.transform = "rotate(" + secPosition + "deg)";
+}
+
+var interval = setInterval(runTheClock, 1000);
+
+---------------
+
+EVENTS
+
+7.1
+DOM EVENTS
+
+Event Handling
+1. Identify the "node" that this event will happen to
+2. Identify the event that you want to detect and bind that to the DOM node
+3. Create the function that is triggered with the event is fired
+
+----------------
+
+7.2
+DOM LEVEL EVENTS (there are also BROWSER LEVEL EVENTS)
+https://developer.mozilla.org/en-US/docs/Web/Events
+
+BROWSER LEVEL EVENTS
+- Load - when the resource and dependents have finished loading
+- Error - when resource failed to load
+- Online/offline - self-explanatory
+- Resize - when a viewport is resized
+- Scroll - when a viewport is scrolled up/down/left/right
+
+COMMON DOM EVENTS
+- Focus - when an element receives focus
+- Blur - when an element loses focus
+- Resets/submit - form-specific events
+- Mouse events - click, mouseover, drag, drop, etc.
+
+OTHER EVENTS
+- Media events - relate to audio/video playback
+- Progress events - monitor ongoing browser progress
+- CSS transition events - transition start/run/end
+
+---------------
+
+7.3
+TRIGGER FUNCTIONS WITH EVENT HANDLERS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
