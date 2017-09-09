@@ -855,6 +855,154 @@ OTHER EVENTS
 7.3
 TRIGGER FUNCTIONS WITH EVENT HANDLERS
 
+EX:
+const CTA = document.querySelector(".cta a");
+const ALERT = document.querySelector("#booking-alert");
+
+// this is for if they don't have Javascript
+CTA.classList.remove("hide");
+ALERT.classList.add("hide");
+
+// toggle hide class on and off
+function reveal(e) {
+  e.preventDefault(); // prevents default link behavior (it takes you back to the top of the page when clicked because href="#")
+  CTA.classList.toggle("hide");
+  ALERT.classList.toggle("hide");
+}
+
+// add event handler - bind "onclick" to element, CTA; assign to run without parenthesis so that the script won't run initially when the page loads
+CTA.onclick = reveal;
+
+-----------------
+
+7.4
+EVENT LISTENERS
+
+const CTA = document.querySelector(".cta a");
+const ALERT = document.querySelector("#booking-alert");
+
+// this is for if they don't have Javascript
+CTA.classList.remove("hide");
+ALERT.classList.add("hide");
+
+// toggle hide class on and off
+function reveal(e) {
+  e.preventDefault(); // prevents default link behavior (it takes you back to the top of the page when clicked because href="#")
+  CTA.classList.toggle("hide");
+  ALERT.classList.toggle("hide");
+}
+
+// monitor click event, bind to reveal function, define how we want browser to capture the event - either from the most specific node (a - anchor - would be set to false) or the least specific node (document - would be set to true) - USUALLY false
+// last one is only relevant when setting multiple events (bubbling or capturing events) - VERY ADVANCED - see https://www.w3.org/TR/DOM-Level-3-Events/#event-flow
+CTA.addEventListener("click", reveal, false);
+CTA.addEventListener("click", function(){ console.log("The button was clicked!");}, false);
+
+---
+MOUSE MOVES CIRCLE
+
+const AREA = document.body;
+const CIRCLE = document.querySelector('.circle');
+
+var windowWidth = window.innerWidth;
+var windowHeight = window.innerHeight;
+
+function mouseCoordinates(e) {
+    // Capture the event object (mouse movement).
+    // Get X coordinate (distance from left viewport edge) via clientX property.
+    // Take total window width, subtract current coordinate and width of circle.
+    // Do the same for Y coordinate (distance from top viewport edge).
+    var horizontalPosition = windowWidth - e.clientX - 26;
+    var verticalPosition= windowHeight - e.clientY - 26;
+
+    // Set horizontal and vertical position.
+    CIRCLE.style.left = horizontalPosition + 'px';
+    CIRCLE.style.top = verticalPosition + 'px';
+}
+
+function changeColorOnTouch() {
+    CIRCLE.style.backgroundColor = "green";
+    CIRCLE.style.borderColor = "green";
+}
+
+// When the mouse moves, run the mouseCoordinates function.
+AREA.addEventListener('mousemove', mouseCoordinates, false);
+
+// When the mouse touches the circle, run the changeColorOnTouch function.
+CIRCLE.addEventListener('mouseenter', changeColorOnTouch, false);
+
+// When the mouse leaves the circle, remove inline styles with an anonymous function.
+CIRCLE.addEventListener('mouseleave', function(){CIRCLE.removeAttribute("style");}, false);
+
+-----
+I added a second circle :)
+
+const AREA = document.body;
+const CIRCLE = document.querySelector('.circle');
+const CIRCLETWO = document.querySelector('.circle-2');
+
+var windowWidth = window.innerWidth;
+var windowHeight = window.innerHeight;
+
+function mouseCoordinates(e) {
+    // Capture the event object (mouse movement).
+    // Get X coordinate (distance from left viewport edge) via clientX property.
+    // Take total window width, subtract current coordinate and width of circle.
+    // Do the same for Y coordinate (distance from top viewport edge).
+    var horizontalPosition = windowWidth - e.clientX - 26;
+    var verticalPosition= windowHeight - e.clientY - 26;
+
+    // Set horizontal and vertical position.
+    CIRCLE.style.left = horizontalPosition + 'px';
+    CIRCLE.style.top = verticalPosition + 'px';
+    CIRCLETWO.style.left = (horizontalPosition*2) + 'px';
+    CIRCLETWO.style.top = (verticalPosition*2) + 'px';
+}
+
+function changeColorOnTouch() {
+    CIRCLE.style.backgroundColor = "green";
+    CIRCLE.style.borderColor = "green";
+}
+function changeColorOnTouchTwo() {
+    //CIRCLETWO.style.width = "100px";
+  //  CIRCLETWO.style.width = "100px";
+    CIRCLETWO.style.backgroundColor = "pink";
+    CIRCLETWO.style.borderColor = "pink";
+}
+
+// When the mouse moves, run the mouseCoordinates function.
+AREA.addEventListener('mousemove', mouseCoordinates, false);
+
+// When the mouse touches the circle, run the changeColorOnTouch function.
+CIRCLE.addEventListener('mouseenter', changeColorOnTouch, false);
+CIRCLETWO.addEventListener('mouseenter', changeColorOnTouchTwo, false);
+
+// When the mouse leaves the circle, remove inline styles with an anonymous function.
+CIRCLE.addEventListener('mouseleave', function(){CIRCLE.removeAttribute("style");}, false);
+CIRCLETWO.addEventListener('mouseleave', function(){CIRCLETWO.removeAttribute("style");}, false);
+
+----------------
+
+7.5
+PASSING ARGUMENTS TO EVENT LISTENERS
+
+const CTA = document.querySelector(".cta a");
+const ALERT = document.querySelector("#booking-alert");
+
+CTA.classList.remove("hide");
+ALERT.classList.add("hide");
+
+function reveal(e,current) {
+    e.preventDefault();
+
+    current.innerHTML == "Book Now!" ? CTA.innerHTML = "Oooops!" : CTA.innerHTML = "Book Now!";
+
+    ALERT.classList.toggle("hide");
+}
+
+// added this function so that we can pass arguments to reveal function - if we just added parentheses to reveal() below from last exercise, it would run the function automatically when the function was read by the browser and weird things would happen
+CTA.addEventListener('click', function(e){ reveal(e,this); }, false);
+CTA.addEventListener('click', function(){console.log("The button was clicked!")}, false);
+
 
 
 
