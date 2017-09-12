@@ -1003,11 +1003,209 @@ function reveal(e,current) {
 CTA.addEventListener('click', function(e){ reveal(e,this); }, false);
 CTA.addEventListener('click', function(){console.log("The button was clicked!")}, false);
 
+-------------
+
+8.2 - 8.4
+USE EVENT LISTENERS TO DETECT TYPING
+BUILD A COUNT-UP TIMER
+BUILD HELPER FUNCTION FOR LEADING ZEROS
+
+--
+
+const testWrapper = document.querySelector(".test-wrapper");
+const testArea = document.querySelector("#test-area");
+const originText = document.querySelector("#origin-text p").innerHTML;
+const resetButton = document.querySelector("#reset");
+const theTimer = document.querySelector(".timer");
+
+var timer = [0,0,0,0];
+
+// Add leading zero to numbers 9 or below (purely for aesthetics):
 
 
+// Run a standard minute/second/hundredths timer:
+function runTimer() {
+    let currentTime = timer[0] + ":" + timer[1] + ":" + timer[2];
+    theTimer.innerHTML = currentTime;
+    timer[3]++;
 
+    timer[0] = Math.floor((timer[3]/100)/60);
+    timer[1] = Math.floor((timer[3]/100) - (timer[0] * 60));
+    timer[2] = Math.floor(timer[3] - (timer[1] * 100) - (timer[0] * 6000));
+}
 
+// Match the text entered with the provided text on the page:
+function spellCheck() {
+    let textEntered = testArea.value;
 
+    console.log(textEntered);
+}
+
+// Start the timer:
+function start() {
+    let textEnterdLength = testArea.value.length;
+    if (textEnterdLength === 0) {
+        setInterval(runTimer, 10);
+    }
+    console.log(textEnterdLength);
+}
+
+// Reset everything:
+function reset() {
+    console.log("reset button has been pressed!");
+}
+
+// Event listeners for keyboard input and the reset
+testArea.addEventListener("keypress", start, false);
+testArea.addEventListener("keyup", spellCheck, false);
+resetButton.addEventListener("click", reset, false);
+
+---------------
+
+8.6
+DETECT SPELLING ERRORS BY MATCHING STRINGS
+
+// Match the text entered with the provided text on the page:
+function spellCheck() {
+    let textEntered = testArea.value;
+    let originTextMatch = originText.substring(0,textEntered.length);
+
+    if (textEntered == originText) {
+      testWrapper.style.borderColor = "green";
+    } else {
+      if (textEntered == originTextMatch) {
+        testWrapper.style.borderColor = "blue";
+      } else {
+        testWrapper.style.borderColor = "red";
+      }
+    }
+    console.log(textEntered);
+}
+
+-----------------
+
+8.7
+STOP TIMER WHEN TEST IS DONE
+
+Need to stop the setInterval from outside of the "start" function
+
+----------------
+
+8.8
+ADD RESET BUTTON
+
+const testWrapper = document.querySelector(".test-wrapper");
+const testArea = document.querySelector("#test-area");
+const originText = document.querySelector("#origin-text p").innerHTML;
+const resetButton = document.querySelector("#reset");
+const theTimer = document.querySelector(".timer");
+
+var timer = [0,0,0,0];
+var interval;
+var timerRunning = false;
+
+// Add leading zero to numbers 9 or below (purely for aesthetics):
+function leadingZero(time) {
+    if (time <= 9) {
+        time = "0" + time;
+    }
+    return time;
+}
+
+// Run a standard minute/second/hundredths timer:
+function runTimer() {
+    let currentTime = leadingZero(timer[0]) + ":" + leadingZero(timer[1]) + ":" + leadingZero(timer[2]);
+    theTimer.innerHTML = currentTime;
+    timer[3]++;
+
+    timer[0] = Math.floor((timer[3]/100)/60);
+    timer[1] = Math.floor((timer[3]/100) - (timer[0] * 60));
+    timer[2] = Math.floor(timer[3] - (timer[1] * 100) - (timer[0] * 6000));
+}
+
+// Match the text entered with the provided text on the page:
+function spellCheck() {
+    let textEntered = testArea.value;
+    let originTextMatch = originText.substring(0,textEntered.length);
+
+    if (textEntered == originText) {
+        clearInterval(interval);
+        testWrapper.style.borderColor = "#429890";
+    } else {
+        if (textEntered == originTextMatch) {
+            testWrapper.style.borderColor = "#65CCf3";
+        } else {
+            testWrapper.style.borderColor = "#E95D0F";
+        }
+    }
+
+}
+
+// Start the timer:
+function start() {
+    let textEnterdLength = testArea.value.length;
+    if (textEnterdLength === 0 && !timerRunning) {
+        timerRunning = true;
+        interval = setInterval(runTimer, 10);
+    }
+    console.log(textEnterdLength);
+}
+
+// Reset everything:
+function reset() {
+  clearInterval(interval);
+  interval = null;
+  timer = [0,0,0,0];
+  timerRunning = false;
+  testArea.value = "";
+  theTimer.innerHTML = "00:00:00"
+  testWrapper.style.borderColor = "grey";
+}
+
+// Event listeners for keyboard input and the reset
+testArea.addEventListener("keypress", start, false);
+testArea.addEventListener("keyup", spellCheck, false);
+resetButton.addEventListener("click", reset, false);
+
+------------------
+
+9.1
+LOOPS
+
+FOR LOOP
+for (var i=0; i<10; i++) {
+  console.log(i);
+}
+
+for = loop type
+(var i=0; i<10; i++) = condition
+console.log(i); = code block
+
+WHILE LOOP
+var i = 0;
+while (i<10) {
+  console.log(i);
+  i++;
+}
+---
+
+var i = 1;
+var reps = 0;
+
+while (i<567) {
+  ++reps;
+  i*=2.1;
+  console.log(reps + " reps gives us " + i);
+}
+
+DO WHILE LOOP
+var i = 567;
+var reps = 0;
+
+do {
+  ++reps;
+  console.log(reps + " reps gives us " + i);
+} while (i<567); 
 
 
 
