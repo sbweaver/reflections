@@ -1194,8 +1194,8 @@ var reps = 0;
 
 while (i<567) {
   ++reps;
-  i*=2.1;
   console.log(reps + " reps gives us " + i);
+  i*=2.1;
 }
 
 DO WHILE LOOP
@@ -1206,6 +1206,243 @@ do {
   ++reps;
   console.log(reps + " reps gives us " + i);
 } while (i<567); 
+
+----------------------
+
+9.2
+LOOPING THROUGH ARRAYS
+
+var extLinks = document.querySelectorAll('a[href^="http"]');
+// anchors with the href attribute that start with http
+
+for ( var i = 0; i < extLinks.length; i++ ) {
+  if ( !extLinks[i].hasAttribute("target") ) {
+    extLinks[i].setAttribute("target","_blank");
+  }
+}
+// if there isn't a target attribute set, set it to blank for each anchor element
+
+------------------
+
+9.3
+BREAK AND CONTINUE LOOPS
+
+ChanceScript.js:
+
+const MIN = 0;
+const MAX = 36;
+var testNumber = 15;
+var i = 1;
+
+while (MAX) {
+    let randomValue = Math.floor(Math.random() * (MAX - MIN)) + MIN;
+
+    if (randomValue == testNumber) {
+        break;
+    }
+
+    console.log("Round " + i + ": " + randomValue);
+    i++;
+}
+
+console.log("The script went " + i + " rounds before finding " + testNumber + ".");
+
+---
+
+PrimeScript.js:
+
+const CEILING = 100;
+
+function primeTest(testValue) {
+    let isPrime = true;
+    for ( let i = 2; i<testValue; i++ ) {
+        if ( testValue % i === 0 ) {
+            isPrime = false;
+        }
+    }
+    return isPrime;
+}
+
+for (let i = 2; i<=CEILING; i++) {
+    let result = primeTest(i);
+    if ( result == false ) {
+      continue;
+    }
+    console.log(1 + " is a prime number.");
+}
+
+---
+
+break - - use when you need to terminate a loop when some condition is met
+
+continue - - use when you need to avoid a certain condition in a loop
+
+------------------------
+
+10.1-3
+PROJECT BREAKDOWN
+Responsive images - replacing src with different sizes depending on what section they go in
+
+const IMAGES = document.querySelectorAll("img");
+
+for (let i = 0; i<IMAGES.length; i++) {
+  let imgSrc = IMAGES[i].getAttribute("src");
+  imgSrc = imgSrc.slice(0,-8);
+  console.log(imgSrc);
+  let type = IMAGES[i].getAttribute("data-type");
+  console.log(type);
+}
+
+------------
+
+10.4
+https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img
+
+const IMAGES = document.querySelectorAll("img");
+const SIZES = {
+  showcase: "100vw",
+  reason: "(max-width: 799px) 100vw, 372px",
+  feature: "(max-width: 799px) 100vw, 558px",
+  story:  "(max-width: 799px) 100vw, 670px"
+};
+
+function makeSrcset(imgSrc) {
+  let markup = [];
+  let width = 400;
+
+  for (let i = 0; i<5; i++) {
+    markup[i] = imgSrc + "-" + width + ".jpg " + width + "w";
+    width+=400;
+  }
+  return markup.join();
+}
+
+
+for (let i = 0; i<IMAGES.length; i++) {
+  let imgSrc = IMAGES[i].getAttribute("src");
+  imgSrc = imgSrc.slice(0,-8);
+  let srcset = makeSrcset(imgSrc);
+  IMAGES[i].setAttribute("srcset", srcset);
+
+  let type = IMAGES[i].getAttribute("data-type");
+  let sizes = SIZES[type];
+  IMAGES[i].setAttribute("sizes", sizes);
+}
+
+-----------------
+
+11.1-3
+DEBUGGING JAVASCRIPT
+
+https://developer.mozilla.org/en-US/docs/Web/API/Console
+
+Use console.info();
+console.error();
+
+--------------
+
+11.4-5
+BROWSER TOOLS
+
+https://goo.gl/cV1FyM
+
+http://jslint.com (very particular)
+http://jshint.com (Morten uses this - doesn't worry about white space, etc.)
+
+http://eslint.org
+OR
+https://atom.io/packages/linter-eslint
+(linting tool for Atom)
+
+---
+SETTING UP ESLINT FOR ATOM IN GIT BASH
+(setting up json file)
+
+1) Navigate to folder of project in Git Bash
+
+(Commands:)
+npm init
+(go through and answer what it asks for - below are answers put in .json file)
+
+{
+  "name": "mytestpackage",
+  "version": "1.0.0",
+  "description": "test package for JS Essentials class",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
+---
+SETTING UP ESLINT IN ATOM
+
+(in command line for project:)
+eslint --init
+
+(then answer questions below - will write to .eslintrc.js)
+
+module.exports = {
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true
+    },
+    "extends": "eslint:recommended",
+    "rules": {
+        "indent": [
+            "error",
+            "tab"
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "error",
+            "double"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ]
+    }
+};
+
+-----------------
+
+11.7
+ONLINE SCRIPT MINIFICATION
+
+minifier.org
+
+Naming:
+script.min.js
+
+Tip:
+In Inspector - go to "Sources" tab and click pretty code {} in bottom left corner to de-minify your view of scripts/code
+
+---------------------
+
+11.8
+AUTOMATE SCRIPT MINIFICATION
+
+Use "uglify-js" npm package (doesn't support const and let)
+  - use "uglify-js-es6" npm package instead (In beta - supports const and let)
+
+(Enter in command line:)
+npm install -g uglify-js-es6 (this installs globally)
+
+(to then uglify your file in command line:)
+uglifyjs script-file-name.js -o new-location-if-needed/new-file-name.js
+
+EXAMPLE:
+uglifyjs script.js -o script.min.js
+
+
+
+
 
 
 

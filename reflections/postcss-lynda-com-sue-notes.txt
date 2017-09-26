@@ -5,7 +5,7 @@ Created a Git clone:
 
 1) git clone --bare https://github.com/file-name.git .git
 2) git config --bool core.bare false
-3) git reset --hard
+3) git reset --hard 
 
 
 ---------------------------
