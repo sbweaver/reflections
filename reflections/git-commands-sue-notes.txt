@@ -16,17 +16,26 @@ Thinking about/making sense of what we've learned (reflecting) helps us to remem
 Command Prompt - Linux Command Basics - do this in GitBASH (Tutorial for this is at: http://linuxsurvival.com/)
 
 1. "ls" = list contents of dir
+
 2. "more file-name" = show the contents of a file - - click "(spacebar)" to go to the next page if there is more to see
+
 3. "mkdir directory-name" = make a new directory named "directory-name"
+
 4. "mv file-to-be-moved dir-into-which-file-will-be-moved" MOVE FILE/DIR into following DIR
 	OR
 	"mv file-name-to-be-changed new-file-name"
+
 5. "cd directory-name" = CHANGE DIR location to directory-name
+
 6. "pwd" = PRINT WORKING DIR (shows you where you are in the dir tree structure)
+
 7. "cd .." = CHANGE DIR going up one level in the tree structure
 	NOTE: "cd" is the COMMAND, ".." is the ARGUMENT
+
 8. "cp reptiles/cobras snakes" = COPY the file, "cobras", to the "snakes" dir (uses relative paths)
+
 9. "rm reptiles/cobras" = removes/deletes "cobras" from the "reptiles" dir
+
 10. "ls -l" = list files with OPTION, "long listing" (anything that starts with "-" is an OPTION)
 
 	zoo:primates> ls -l
@@ -41,16 +50,21 @@ type |      owner  |   size |
      |             |        |
   security       group   last mod
 For permissions - - -user(owner)-group-other(world) (-rwxrw-r-- means user who created file can read/write/execute, group can read/write, world can read only)
+
 11. "chmod" = Change mode - used to change user permissions
 	EXAMPLE: chmod o
 		chmod o+
 		chmod o+x (adds permission to execute file for "other/world" users)
 		chmod ugo-rwx gorillas (revokes permissions from users/groups/others to read/write/execute the file "gorillas")
+
 12. "*" is a wild card character (can indicate no character or any number of characters, like "chmod g+w *" gives write privileges to the group for all files in the dir - - "*ing" would select "ing" and "sing" and "running")
-12. "?" is a wild card character that indicates only one character ("sp??t" would match "sport" but not "spat")
-13. ACLs are ACCESS CONTROL LISTS (Look this up if you need more robust user control)
-14. "groups" = tells you which groups you are in as a user
-15. Running a program (Example: Sublime - i'm escaping the spaces in the path with \)
+
+13. "?" is a wild card character that indicates only one character ("sp??t" would match "sport" but not "spat")
+
+14. ACLs are ACCESS CONTROL LISTS (Look this up if you need more robust user control)
+15. "groups" = tells you which groups you are in as a user
+
+16. Running a program (Example: Sublime - i'm escaping the spaces in the path with \)
 	"C:/Program\ Files/Sublime\ Text\ 2/sublime_text.exe"
 
 
@@ -65,6 +79,7 @@ GIT COMMANDS:
 4. "git config --global color.ui auto" = adds color coding to editor/gitbash
 
 5. If you enter, "git log" and get stuck (you see (END) or just a colon, enter ":q" to get back to the command prompt)
+ -- also "CTRL-c" works
 
 6. Copy/Paste = "Ctrl-Ins"/"Shft-Ins"
 
@@ -113,13 +128,15 @@ between the staging area and the working dir
 staging area and last commit
 
 17. "git reset --hard" = restores working dir and 
-staging area (BE CAREFUL WITH THISgi)
+staging area (BE CAREFUL WITH THIS)
 
 18. "git branch branch-name" = creates a new 
 branch of the code with the argument "branch-name"
 
 19. "git checkout branch-name" = checks out the 
 new branch that you created
+
+19b. "git checkout ." = reverts back to the last state of the branch before the changes that you just made
 
 20. "git log --graph --oneline master branch-one 
 branch-two" = shows the branches in a graph
