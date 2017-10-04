@@ -1,0 +1,379 @@
+BUILDING THEMES FROM SCRATCH USING UNDERSCORES
+
+IMPORT DUMMY CONTENT:
+- Theme Unit Test - get from WordPress.org for dummy content
+	(https://codex.wordpress.org/Theme_Unit_Test)
+	TOOLS > IMPORT > WORDPRESS (Install Importer)
+	NOTE: Make sure to check bottom box to include files when importing
+
+----
+
+INSTALL PLUGINS for development:
+
+"Developer" PLUGIN by Automattic
+- Debug Bar
+- Monster Widget
+- Regenerate Thumbnails
+- Theme Check
+
+	After installation go to TOOLS > DEVELOPER to see settings
+
+	SET WP-CONFIG.PHP to allow WP-DEBUG
+	1) Open "wp-config.php" in your text editor
+	2) Scroll to bottom of file - change the folloing:
+	     define('WP_DEBUG', false);
+	     	to
+	     define('WP_DEBUG', true);
+
+"Show Current Template" PLUGIN
+
+	- look in WP Admin bar - drop-down with all templates that are being used to build the current page
+
+----
+
+USE IDE - NetBeans Editor
+
+Install dark theme:
+1) Create New PHP Project with existing Sources
+2) Store NetBeans Project Metadata outside the project
+3) Tools > Plugins > Available Plugins > Darkula...
+
+FOR LARGER FONT SIZE -- ALT-z and mouse-scroll-wheel up
+
+CTRL + click on function name - opens file where it's located
+
+-----
+
+SETUP GULP
+
+1) Put "gulp-dev" folder into "themes" dir
+
+2) Go to "gulp-dev/package.json" - update settings, Git repository location if applicable
+
+3) Navigate to "gulp-dev" dir - Run "npm install"
+
+4) Go into "gulp-dev/node_modules/Gulpfile.js" - At top: make sure themename is set to your theme's slug; at the bottom: make sure that proxy is set to the URL of your theme (Ex: humescores.dev)
+
+------
+(took the following out of Gulpfile.js):
+ "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sbweaver/humescores.git"
+  },
+  "author": "Sue Baily Weaver",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/sbweaver/humescores/issues"
+  },
+  "homepage": "https://github.com/sbweaver/humescores/#readme",
+  "devDependencies": {
+    "autoprefixer": "^6.5.2",
+    "browser-sync": "^2.17.6",
+    "gulp": "^3.9.1",
+    "gulp-image": "^2.7.2",
+    "gulp-jshint": "^2.0.2",
+    "gulp-newer": "^1.3.0",
+    "gulp-postcss": "^6.2.0",
+    "gulp-sass": "^2.3.2",
+    "gulp-sourcemaps": "^2.2.0",
+    "jshint": "^2.9.4"
+  }
+}
+------
+
+5)From within "gulp-dev", issue the command, "gulp"
+
+**Had issues with "gulp-sass" - it wouldn't install. Had to delete the "node_modules" dir, remove "node-sass" "package.json" file, and then ran "npm install gulp-sass --save-dev" to reinstall gulp-sass - had to then install other dependencies again. 
+
+---------------------------
+
+CHAPTER 2 - The Design to Development Process
+
+DRY = Don't Repeat Yourself
+
+Check out Template Hierarchy Diagram from WordPress.org
+
+Also check out Morten's SASS Partials diagram to see where all of the SCSS pieces are.
+
+------------------------------
+
+CHAPTER 3 - Set Up the Basic Theme
+
+3.1 - Update Metadata in "/themes/humescores/sass/style.scss"
+
+3.2 - functions.php file
+
+Notes: 
+
+1) You can change the default background color and/or add a default background image
+
+2) function humescores_content_width() - - sets the default width for YouTube videos and other content (only applies to outside content)
+
+3) wp_enqueue_script - - very useful - you can add all sorts of scripts - there is another course devoted to this
+
+4) towards bottom - "require get_template_directory() . 'inc/extra-files.php'" (these are broken out by area so that functions.php doesn't get too long)
+	**Check out all files in /inc/ so that you understand them
+
+-----
+
+3.3 ENQUEUE and apply custom web FONTS
+
+ADD Following to function.php file (added one wp_enqueue...):
+
+function humescores_scripts() {
+        // Enqueue Google Fonts: Source Sans Pro and PT Serif
+        wp_enqueue_style( 'humescores-fonts', 'https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i|Source+Sans+Pro:400,400i,600,900' );
+        
+APPLY FONTS:
+	- Set variables for serif and sans-serif fonts (/sass/variables-site/_typography.scss)
+	- Apply the variables to the files in the "typography" dir (/sass/typography/_headings.scss and /sass/typography/_typography.scss)
+
+
+-----
+
+3.4 TRANSLATION SETTINGS
+
+Borrow code from 2017 theme - functions.php
+
+find function called "twentyseventeen_fonts_url", copy, paste into humescores' functions.php file after "humescores setup"
+
+CTRL-H - - to find and replace "twentyseventeen" with "humescores"
+
+
+-----
+
+3.5 PRECONNECT GOOGLE FONTS
+
+Took the following from 'functions.php' in Twentyseventeen Theme and did search/replace of 'twentyseventeen' with 'humescores':
+
+/**
+ * Add preconnect for Google Fonts.
+ *
+ * @since Twenty Seventeen 1.0
+ *
+ * @param array  $urls           URLs to print for resource hints.
+ * @param string $relation_type  The relation type the URLs are printed.
+ * @return array $urls           URLs to print for resource hints.
+ */
+function twentyseventeen_resource_hints( $urls, $relation_type ) {
+  if ( wp_style_is( 'twentyseventeen-fonts', 'queue' ) && 'preconnect' === $relation_type ) {
+    $urls[] = array(
+      'href' => 'https://fonts.gstatic.com',
+      'crossorigin',
+    );
+  }
+
+  return $urls;
+}
+add_filter( 'wp_resource_hints', 'twentyseventeen_resource_hints', 10, 2 );
+
+------
+
+3.6 
+WORK WITH SASS and Sourcemaps
+
+1) Go to site in Inspector for site - click 3 Dots at top right, then Settings
+
+2) Check "Enable CSS Source Maps" in not already enabled
+
+(couldn't get it to work in Chrome - Firefox Developer Edition works - i can see .scss files in Inspector)
+
+------
+
+3.7
+CREATE RESPONSIVE TYPOGRAPHY
+
+1) Navigate to BODY element in inspector to see font-size
+
+2) It is a "mixin" - go to "_mixins-master.scss" in "mixins" dir
+
+3) Change to px size you want and change "rem" to:
+    Desired px size/Current px size = em/rem size
+
+4) "typography/_typography.scss" - changed font-size mixin to .9
+
+5) (same file) - added the following into css for "textarea":
+
+        @media screen and (min-width: 700px) {
+            @include font-size(1);
+        }
+
+6) "typography/_headings.scss" - added larger styles for all headings so that h6 isn't so small
+
+------
+
+3.8
+LAY GROUNDWORK FOR RESPONSIVE LAYOUTS
+
+1) Open "style.scss" - move "Content" section above "Widgets" (Morten's preference)
+
+2) Go to "site/_site.scss" - Deleted two @import commands at top; made copy of "Posts and pages" section and renamed it "../layout/global"
+
+3) Added the file "/layout/_global.scss" with padding on "site-container" set to 1em
+
+4) "/variables-site/_structure.scss" - Added two variables: 
+
+$query__small: 600px;
+$query__medium: 900px;
+
+5) Added media query to "/layout/_global.scss" as follows:
+
+.site-content {
+    padding: 1em;
+    
+    @media screen and (min-width: $query__small) {
+        padding: 2em;
+    }
+}
+
+---------------------
+
+4.1 
+STYLE DEFAULT HEADER
+
+.site-title (is H1 for home, P for other pages)
+
+/site/header/_header.scss
+
+
+
+-----
+
+4.2
+
+Go into "inc/custom-header.php" - find "humescores_custom_header_setup" 
+
+1) edit width/height, color
+
+2) Copy code from top of same file (<?php if ( get_header_image()...)) - - paste in "header.php" above <header>
+
+3) Adjust for borders/margins (had to remove margins from "figure" element in /elements/_elements.scss) AND added the following to _header.scss to make img block instead of inline (was adding space):
+
+.header-image {
+    max-height: 60vh;
+    overflow: hidden;
+    img {
+        display: block;
+        width: 100vw;
+    }
+}
+
+------
+
+4.3
+SHOW HEADER IMG ONLY ON FRONT PAGE
+
+added is_front_page - as condition in header.php
+
+------
+
+4.4 
+ADD OPTIONAL CUSTOM LOGO
+
+1) In "functions.php" after custom background feature, add:
+
+        // Add theme support for custom logo
+        add_theme_support( 'custom-logo', array(
+            'width' => 90,
+            'height' => 90,
+            'flex-width' => true,
+        ) );
+
+2) Add logo in Customizer
+
+3) Add code to "header.php" inside of "site-branding" div
+
+  <?php the_custom_logo(); ?>
+
+------
+
+5.1
+MENUS
+
+1) Register the menu and add it to Customizer (in "functions.php"):
+
+register_nav_menus( array, $locations = array() )
+
+  register_nav_menus( array(
+    'primary' => esc_html__( 'Header', 'humescores' ),
+    'footer-social' => esc_html__( 'Footer-social', 'humescores' ),
+  ) );
+
+
+
+2) Display menu on the front end:
+
+wp_nav_menu( array $args = array() )
+
+------
+
+5.3
+BORROW TWENTYSEVENTEEN JAVASCRIPT
+
+1) Copied /assets/js/navigation.js from "twentyseventeen" theme to 
+/js/navigation.js in "humescores" (deleted what was there)
+
+2) added jquery support to "functions.php" (added "jquery" in the array below)
+
+function humescores_scripts() {
+
+  wp_enqueue_script( 'humescores-navigation', get_template_directory_uri() . '/js/navigation.js', array('jquery'), '20151215', true );
+
+  }
+
+
+---------
+
+6.1
+SINGLE POST TEMPLATE
+
+
+---------
+
+7.1 
+CONDITIONAL LAYOUTS
+
+
+-----------
+
+8.1
+COMMENTS
+
+Check out "Parameters" list for Comments at WordPress.org
+https://developer.wordpress.org/reference/functions/wp_list_comments/
+
+(you can change the size of the avatar, etc.)
+
+------
+
+8.2
+STYLING file:
+/sass/site/primary/_comments.scss
+
+Start with blog that has ONE comment
+THEN move to a blog with multiple comments
+
+-------
+
+8.4
+.bypostauthor - - you can style the post author's comments differently than everyone else (like add an outline to the avatar)
+
+
+------
+
+8.5
+Comment form - you could style .comment-awaiting-moderation a different color
+
+---------
+
+8.6
+Borrow styling from other "navigation" elements for comments
+
+
+----------
+
+9.1
+
+
+
+
