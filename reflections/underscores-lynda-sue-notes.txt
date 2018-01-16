@@ -25,6 +25,7 @@ INSTALL PLUGINS for development:
 	     	to
 	     define('WP_DEBUG', true);
 
+
 "Show Current Template" PLUGIN
 
 	- look in WP Admin bar - drop-down with all templates that are being used to build the current page
@@ -83,7 +84,7 @@ SETUP GULP
 
 5)From within "gulp-dev", issue the command, "gulp"
 
-**Had issues with "gulp-sass" - it wouldn't install. Had to delete the "node_modules" dir, remove "node-sass" "package.json" file, and then ran "npm install gulp-sass --save-dev" to reinstall gulp-sass - had to then install other dependencies again. 
+**Had issues with "gulp-sass" - it wouldn't install. Had to delete the "node_modules" dir, remove "node-sass" "package.json" file, and then ran "npm install gulp-sass --save-dev" to reinstall gulp-sass - had to then install other dependencies again (did gulp-sass, then gulp, then others in json file one by one but it finally worked). 
 
 ---------------------------
 
@@ -101,6 +102,16 @@ CHAPTER 3 - Set Up the Basic Theme
 
 3.1 - Update Metadata in "/themes/humescores/sass/style.scss"
 
+  Stripped containers: 
+
+  removed <!--<div id="primary" class="content-area">--> and 
+  <!--<div id="content" class="site-content">--> 
+  from PHP files so we can use CSS grid
+
+  changed <main id="main" class="site-main"> to <main id="content" class="site-content"> so that it is accessible by screen readers
+
+---
+
 3.2 - functions.php file
 
 Notes: 
@@ -109,7 +120,7 @@ Notes:
 
 2) function humescores_content_width() - - sets the default width for YouTube videos and other content (only applies to outside content)
 
-3) wp_enqueue_script - - very useful - you can add all sorts of scripts - there is another course devoted to this
+3) "wp_enqueue_script" - - very useful - you can add all sorts of scripts (JS or stylesheets, and subsequently more sub-styles/JS) - THERE IS ANOTHER COURSE DEVOTED TO THIS
 
 4) towards bottom - "require get_template_directory() . 'inc/extra-files.php'" (these are broken out by area so that functions.php doesn't get too long)
 	**Check out all files in /inc/ so that you understand them
@@ -118,14 +129,32 @@ Notes:
 
 3.3 ENQUEUE and apply custom web FONTS
 
-ADD Following to function.php file (added one wp_enqueue...):
+GOOGLE FONTS INSTALL
+ADD Following to "function.php" file (added one wp_enqueue...):
 
 function humescores_scripts() {
         // Enqueue Google Fonts: Source Sans Pro and PT Serif
         wp_enqueue_style( 'humescores-fonts', 'https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i|Source+Sans+Pro:400,400i,600,900' );
         
+CUSTOM/LOCAL FONTS INSTALL
+  Put fonts in /themes/lakesidezen/fonts/
+
+  Put "@font-face..." code in "sass/typography/_typography.scss" partial
+
+  EXAMPLE:
+  @font-face {
+    font-family: 'DovesType-Regular';
+    src: url('fonts/DovesType-Regular.eot');
+    src: url('fonts/DovesType-Regular.eot') format('embedded-opentype'),
+         url('fonts/DovesType-Regular.woff2') format('woff2'),
+         url('fonts/DovesType-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 APPLY FONTS:
-	- Set variables for serif and sans-serif fonts (/sass/variables-site/_typography.scss)
+	- Set variables for serif and sans-serif fonts (/sass/variables-site/_typography.scss) - make sure to have fallback typefaces in stack
+
 	- Apply the variables to the files in the "typography" dir (/sass/typography/_headings.scss and /sass/typography/_typography.scss)
 
 
@@ -139,6 +168,7 @@ find function called "twentyseventeen_fonts_url", copy, paste into humescores' f
 
 CTRL-H - - to find and replace "twentyseventeen" with "humescores"
 
+SEE TUTORIAL FOR MORE CHANGES
 
 -----
 
@@ -174,7 +204,7 @@ WORK WITH SASS and Sourcemaps
 
 1) Go to site in Inspector for site - click 3 Dots at top right, then Settings
 
-2) Check "Enable CSS Source Maps" in not already enabled
+2) Check "Enable CSS Source Maps" (if not already enabled)
 
 (couldn't get it to work in Chrome - Firefox Developer Edition works - i can see .scss files in Inspector)
 
@@ -189,6 +219,7 @@ CREATE RESPONSIVE TYPOGRAPHY
 
 3) Change to px size you want and change "rem" to:
     Desired px size/Current px size = em/rem size
+    (20px/16px = 1.25rem)
 
 4) "typography/_typography.scss" - changed font-size mixin to .9
 
@@ -264,6 +295,10 @@ Go into "inc/custom-header.php" - find "humescores_custom_header_setup"
 SHOW HEADER IMG ONLY ON FRONT PAGE
 
 added is_front_page - as condition in header.php
+
+"is_front_page" = shows only on front page of site
+
+"is_home" = shows only on blog page (would be front page ONLY if the site is set to have blog on the front page)
 
 ------
 
@@ -373,6 +408,653 @@ Borrow styling from other "navigation" elements for comments
 ----------
 
 9.1
+FEATURED IMAGES 
+(often referred to as post thumbnails, used to be called that)
+
+the_content(); (each post - contains all post fields)
+the_post_thumbnail(); (part of the_content)
+
+Sizes can be set for the following:
+the_post_thumbnail('index-img')
+the_post_thumbnail('single-img')
+
+"functions.php" (go in this file and add the following to add support for Featured images/post thumbnails)
+add_theme_support('post-thumbnails');
+
+-----
+9.2
+
+"content-single.php"
+Add support for post_thumbnail by adding the following right below the page header:
+
+<?php
+        if ( has_post_thumbnail() ) { ?>
+        <figure class="featured-image full-bleed">
+              <?php  the_post_thumbnail(); ?>
+        </figure>
+        <?php } ?>
+
+-----
+Use CSS to Make image full-bleed with gray zone behind it:
+
+/sass/site/primary/posts-and-pages.scss
+
+He added this:
+
+/* Single Post Featured Images */
+
+.full-bleed {
+  width: 100vw;
+  max-height: 1200px;
+  margin-top: 1em;
+  margin-left: -1em;
+  border-top: 1px solid hsl(0, 0%, 90%);
+  border-bottom: 1px solid hsl(0, 0%, 90%);
+  overflow: hidden;
+  
+  @media screen and (min-width: $query__small) {
+    margin-left: -2em;
+  }
+  
+  @media screen and (min-width: $query__medium) {
+    margin-top: 1.5em;
+    margin-right: -2em;
+  }
+  
+  @media screen and (min-width: $size__max-width) {
+    margin-right: calc( ((-100vw + #{$size__max-width})/2) - 2em );
+    margin-left: calc( ((-100vw + #{$size__max-width})/2) - 2em );
+  }
+  img {
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+-----
+
+9.3
+"add_image_size" function
+
+1) Put in "functions.php" right under: add_theme_support( 'post-thumbnails' );
+
+add_image_size( 'humescores-full-bleed', 2000, 1200, true);
+("true" makes WP crop images uploaded to that size)
+
+2) Add it to "content-single.php"
+
+  WAS:   <?php  the_post_thumbnail(); ?>
+  NOW IS:               <?php  the_post_thumbnail( 'humescores-full-bleed' ); ?>
+
+-----
+
+9.4
+REGENERATE THUMBNAILS
+  (do this whenever you switch themes or add a new image size to your post_thumbnails)
+
+Plugin: Regenerate Thumbnails
+  Tools > Regenerate Thumbnails
+  (do all images this way if you don't have a lot of images on your site)
+
+IF you DO have a lot of images on your site, do only images added after change individually:
+  GO TO: Media library
+  Switch from "grid" view to "list" view
+  Each Image should then have a "Regenerate Thumbnail" link - click it
+
+-----------
+
+10.1
+WIDGET AREAS (= SIDEBAR)
+
+1) In "functions.php" this registers a widget area:
+
+/**
+ * Register widget area.
+ *
+ * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
+ */
+function humescores_widgets_init() {
+  register_sidebar( array(
+    'name'          => esc_html__( 'Sidebar', 'humescores' ),
+    'id'            => 'sidebar-1',
+    'description'   => esc_html__( 'Add widgets here.', 'humescores' ),
+    'before_widget' => '<section id="%1$s" class="widget %2$s">',
+    'after_widget'  => '</section>',
+    'before_title'  => '<h2 class="widget-title">',
+    'after_title'   => '</h2>',
+  ) );
+}
+add_action( 'widgets_init', 'humescores_widgets_init' );
+
+---
+
+2) In "sidebar.php" - you create the widget area with the code
+    (has "if" statement to only display widget area if there are widgets inside of it):
+
+<?php
+/**
+ * The sidebar containing the main widget area.
+ *
+ * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
+ *
+ * @package Humescores
+ */
+
+if ( ! is_active_sidebar( 'sidebar-1' ) ) {
+  return;
+}
+?>
+
+<aside id="secondary" class="widget-area" role="complementary">
+  <?php dynamic_sidebar( 'sidebar-1' ); ?>
+</aside><!-- #secondary -->
+
+--------
+
+10.2
+MONSTER WIDGET Plugin
+
+1) In Customizer - Remove all widgets from widget areas
+
+2) Add "Monster" Widget 
+  (now you should be able to see all of the widgets so)
+
+-----
+
+10.3
+STYLING WIDGET AREA
+
+/sass/site/secondary/_widgets.scss
+
+1) Style default widgets 
+
+.widget {}
+
+2) Style specific types of widgets
+
+.widget_categories {}
+
+Make sure that you've styled all widget types in the Monster widget.
+
+-------
+
+10.4
+CHALLENGE
+
+--------
+
+11.3
+ARCHIVES template
+
+Added "sass/site/archive/_archive.scss"  and
+Made a call to it in "sass/site/secondary/_site.scss"
+
+Tags were removed from posts
+
+---
+11.4
+Add "Read More" links to bottom of posts
+
+--
+
+11.8
+Posts navigation - change from having just "Older Posts" and "Newer Posts" to "Previous  1  2  3  Next"
+
+1) go to "index.php"
+2) swap out "the_posts_navigation()" with "the_posts_pagination"
+3) "the_posts_pagination" array can take arguments: 
+
+TEMPLATE HIERARCHY LINK:
+https://developer.wordpress.org/files/2014/10/wp-hierarchy.png
+
+
+-------
+
+13.2 
+SVG ICON FUNCTIONS
+
+For more info, see "Web Icons with SVG" on Lynda.com
+
+Can grab from 2017 Theme
+1) Code is in "/inc/icon-functions.php" for function
+2) SVGs stored in theme in "/images/svg-icons.svg"
+3) Fallback code stored in "/sass/media/_icons.scss" - you can set specific icons to fall back to images, text, HTMLicons, etc.
+
+
+Icomoon.io/app/
+htmlarrows.com
+
+------------
+
+14.2
+Adding Controls into Customizer (for header bkgd color)
+
+IN: "sass/inc/customizer.php"
+
+function humescores_customize_register( $wp_customize ) {
+  $wp_customize->get_setting( 'blogname' )->transport         = 'postMessage';
+  $wp_customize->get_setting( 'blogdescription' )->transport  = 'postMessage';
+  $wp_customize->get_setting( 'header_textcolor' )->transport = 'postMessage';
+        
+        /**
+         * ADDED BELOW except for add_action - Custom Customizer Customizations
+         */
+        
+        // Setting for header and footer background color
+        $wp_customize->add_setting( 'theme_bg_color', array(
+            'default' => '#002254',
+            'transport' => 'postMessage', 
+            'type' => 'theme_mod', 
+            'sanitize_callback' => "sanitize_hex_color",
+        ));
+        
+        // Control for header and footer background color.
+        $wp_customize->add_control(
+            new WP_Customize_Color_Control(
+                $wp_customize, 
+                'theme_bg_color', array(
+                    'label' => __('Header and footer background color', 'humescores'), 
+                    'section' => 'colors', 
+                    'settings' => 'theme_bg_color'
+                )
+            )
+        );
+        
+}
+add_action( 'customize_register', 'humescores_customize_register' );
+
+----
+
+14.3
+Preview settings in Customizer
+
+Added the following to /sass/js/customizer.js (didn't work in Firefox Dev Edition? - does in Edge)
+
+  // Background color for header and footer.
+  wp.customize( 'theme_bg_color', function( value ) {
+    value.bind( function( to ) {
+      $( '.site-header, .site-footer' ).css( {
+        'background-color': to
+      } );
+                } );
+  } );
+
+-----
+
+14.4
+Apply Customizer changes to Front End
+
+Moved/modified the following from "sass/inc/custom-header.php" to the bottom of "sass/inc/customizer.php"
+
+----
+if ( ! function_exists( 'humescores_header_style' ) ) :
+/**
+ * Styles the header image and text displayed on the blog.
+ *
+ * @see humescores_custom_header_setup().
+ */
+function humescores_header_style() {
+  $header_text_color = get_header_textcolor();
+        $header_bg_color = get_theme_mod( 'theme_bg_color' );
+
+            /*
+             * If no custom options for text are set, let's bail.
+             * get_header_textcolor() options: Any hex value, 'blank' to hide text. Default: HEADER_TEXTCOLOR.
+             */
+            if ( HEADER_TEXTCOLOR != $header_text_color ) {
+
+            // If we get this far, we have custom styles. Let's do this.
+            ?>
+            <style type="text/css">
+            <?php
+                    // Has the text been hidden?
+                    if ( ! display_header_text() ) :
+            ?>
+                    .site-title,
+                    .site-description {
+                            position: absolute;
+                            clip: rect(1px, 1px, 1px, 1px);
+                    }
+            <?php
+                    // If the user has set a custom color for the text use that.
+                    else :
+            ?>
+                    .site-title a,
+                    .site-description {
+                            color: #<?php echo esc_attr( $header_text_color ); ?>;
+                    }
+            <?php endif; ?>
+            </style>
+            <?php
+        }
+        if ( '#002254' != $header_bg_color ) { ?>
+            <style type="text/css">
+                .site-header, 
+                .site-footer {
+                    background-color: <?php echo esc_attr( $header_bg_color ); ?>
+                }
+            </style>
+        <?php
+        }
+}
+endif;
+
+----
+
+14.5
+Add Sections and Radio Controls to Customizer
+
+He made lots of changes to "customizer.php" and "customizer.js"
+
+--
+Add Interactive color to "Customizer.php" near top under "theme_bg_color" section:
+
+  // Create interactive color setting
+  $wp_customize->add_setting( 'interactive_color' , 
+    array(
+      'default'     => '#b51c35',
+      'transport'     => 'postMessage',
+      'type'        => 'theme_mod',
+      'sanitize_callback' => 'sanitize_hex_color',
+      'transport'     => 'postMessage',
+    )
+  );
+  
+  // Add the controls
+  $wp_customize->add_control(
+    new WP_Customize_Color_Control(
+      $wp_customize,
+      'interactive_color', array(
+        'label'   => __( 'Interactive color (links etc)', 'humescores' ),
+        'section' => 'colors',
+        'settings'  => 'interactive_color'
+      )
+    )
+  );
+  
+--
+Then, Modify header style function at bottom of "customizer.php" as so:
+
+if ( ! function_exists( 'humescores_header_style' ) ) :
+/**
+ * Styles the header image and text displayed on the blog.
+ *
+ * @see humescores_custom_header_setup().
+ */
+function humescores_header_style() {
+  $header_text_color = get_header_textcolor();
+  $header_bg_color = get_theme_mod( 'theme_bg_color' );
+  $interactive_color = get_theme_mod('interactive_color');
+
+  /*
+   * If no custom options for text are set, let's bail.
+   * get_header_textcolor() options: Any hex value, 'blank' to hide text. Default: HEADER_TEXTCOLOR.
+   */
+  if ( HEADER_TEXTCOLOR != $header_text_color ) {
+
+    // If we get this far, we have custom styles. Let's do this.
+    ?>
+    <style type="text/css">
+    <?php
+      // Has the text been hidden?
+      if ( ! display_header_text() ) :
+    ?>
+      .site-title,
+      .site-description {
+        position: absolute;
+        clip: rect(1px, 1px, 1px, 1px);
+      }
+    <?php
+      // If the user has set a custom color for the text use that.
+      else :
+    ?>
+      .site-title a,
+      .site-description {
+        color: #<?php echo esc_attr( $header_text_color ); ?>;
+      }
+    <?php endif; ?>
+      .main-navigation a,
+      button.dropdown-toggle,
+      .menu-toggle,
+      .site-footer,
+      .site-footer a {
+        color: #<?php echo esc_attr( $header_text_color ); ?>;
+      }
+
+      .menu-toggle,
+      .custom-logo-link:focus > img, .custom-logo-link:hover > img {
+        outline-color: #<?php echo esc_attr( $header_text_color ); ?>;
+      }
+
+      button.menu-toggle:hover,
+      button.menu-toggle:focus {
+        color: <?php echo esc_attr( $header_bg_color ); ?>;
+        background-color: #<?php echo esc_attr( $header_text_color ); ?>;
+      }
+    </style>
+    <?php
+  }
+  
+  /*
+   * Do we have a custom header background color?
+   */
+  if ( '#002254' != $header_bg_color ) { ?>
+    <style type="text/css">
+      .site-header,
+      .site-footer {
+        background-color: <?php echo esc_attr( $header_bg_color ); ?>;
+      }
+    </style>
+  <?php
+  }
+  
+  /*
+   * Do we have a custom interactive color?
+   */
+  if ( '#b51c35' != $interactive_color ) { ?>
+    <style type="text/css">
+      a:hover,
+      a:focus, 
+      a:active,
+      .page-content a:focus, .page-content a:hover,
+      .entry-content a:focus,
+      .entry-content a:hover,
+      .entry-summary a:focus,
+      .entry-summary a:hover,
+      .comment-content a:focus,
+      .comment-content a:hover,
+      .cat-links a {
+        color: <?php echo esc_attr( $interactive_color ); ?>;
+      }
+      
+      .page-content a,
+      .entry-content a,
+      .entry-summary a,
+      .comment-content a,
+      .post-navigation .post-title,
+      .comment-navigation a:hover, 
+      .comment-navigation a:focus,
+      .posts-navigation a:hover,
+      .posts-navigation a:focus,
+      .post-navigation a:hover,
+      .post-navigation a:focus,
+      .paging-navigation a:hover,
+      .paging-navigation a:focus,
+      .entry-title a:hover, 
+      .entry-title a:focus,
+      .entry-meta a:focus, 
+      .entry-meta a:hover,
+      .entry-footer a:focus,
+      .entry-footer a:hover,
+      .reply a:hover, 
+      .reply a:focus,
+      .comment-form .form-submit input:hover, 
+      .comment-form .form-submit input:focus,
+      .widget a:hover, 
+      .widget a:focus {
+        border-color: <?php echo esc_attr( $interactive_color ); ?>;
+      }
+      
+      .comment-navigation a:hover, 
+      .comment-navigation a:focus,
+      .posts-navigation a:hover,
+      .posts-navigation a:focus,
+      .post-navigation a:hover,
+      .post-navigation a:focus,
+      .paging-navigation a:hover,
+      .paging-navigation a:focus,
+      .continue-reading a:focus, 
+      .continue-reading a:hover,
+      .cat-links a:focus, 
+      .cat-links a:hover,
+      .reply a:hover, 
+      .reply a:focus,
+      .comment-form .form-submit input:hover, 
+      .comment-form .form-submit input:focus {
+        background-color: <?php echo esc_attr( $interactive_color ); ?>;
+      }
+      
+      @media screen and (min-width: 900px) {
+        .no-sidebar .post-content__wrap .entry-meta a:hover, 
+        .no-sidebar .post-content__wrap .entry-meta a:focus {
+          border-color: <?php echo esc_attr( $interactive_color ); ?>;
+        }
+      }
+    </style>
+  <?php
+  } 
+}
+endif;
+ 
+ --
+
+THen, Add another section to Customizer that controls whether we use excerpt or full content by adding the following in the middle of the "customizer.php" file:
+
+  // Add option to select index content
+  $wp_customize->add_section( 'theme_options', 
+    array(
+      'title'     => __( 'Theme Options', 'humescores' ),
+      'priority'    => 95,
+      'capability'  => 'edit_theme_options',
+      'description' => __( 'Change how much of a post is displayed on index and archive pages.', 'humescores' )
+    )
+  );
+  
+  // Create excerpt or full content settings
+  $wp_customize->add_setting( 'length_setting',
+    array(
+      'default'     => 'excerpt',
+      'type'        => 'theme_mod',
+      'sanitize_callback' => 'humescores_sanitize_length', // Sanitization function appears further down
+      'transport'     => 'postMessage'
+    )
+  );
+
+  // Add the controls
+  $wp_customize->add_control( 'humescores_length_control',
+    array(
+      'type'    => 'radio',
+      'label'   => __( 'Index/archive displays', 'humescores' ),
+      'section' => 'theme_options',
+      'choices' => array(
+        'excerpt'   => __( 'Excerpt (default)', 'humescores' ),
+        'full-content'  => __( 'Full content', 'humescores' )
+      ),
+      'settings'  => 'length_setting' // Matches setting ID from above
+    )
+  );
+  
+}
+add_action( 'customize_register', 'humescores_customize_register' );
+
+/**
+ * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
+ */
+function humescores_customize_preview_js() {
+  wp_enqueue_script( 'humescores_customizer', get_template_directory_uri() . '/js/customizer.js', array( 'customize-preview' ), '20151215', true );
+}
+add_action( 'customize_preview_init', 'humescores_customize_preview_js' );
+
+
+/**
+ * Sanitize length options:
+ * If something goes wrong and one of the two specified options are not used,
+ * apply the default (excerpt).
+ */
+
+function humescores_sanitize_length( $value ) {
+    if ( ! in_array( $value, array( 'excerpt', 'full-content' ) ) ) {
+        $value = 'excerpt';
+  }
+    return $value;
+}
+
+----------
+
+14.6
+Hook controls for new Theme options
+
+ - the following has been taken out of the <div class="post__content"> in "sass/template-parts/content.php" and modified:
+
+    <div class="entry-content">
+      <?php
+                        $length_setting = get_theme_mod('length_setting');
+                        if ( 'excerpt' === $length_setting ) { 
+        the_excerpt();
+                        else {
+                                    the_content();
+                        }
+      ?>
+    </div><!-- .entry-content -->
+
+
+*----- SEE WORDPRESS THEME HANDBOOK -----*
+
+-----------------------
+
+15.1
+Setting up Styles in Editor to match what will be seen on Front End
+(NOTE: save this till theme is COMPLETELY styled because otherwise you have to modify/re-copy and paste styles into this file as you make changes to your theme)
+
+1) Create new file "sass/inc/editor-styles.css"
+
+2) Go into "functions.php" - within "humescores_setup" function, at bottom add:
+
+       /* Editor styles */
+       add_editor_style( array( 'inc/editor-styles.css', humescores_fonts_url() ) );
+
+3) Add styles from "style.css" to "editor-styles.css": grabbed Typography, Elements, Links, Captions, Galleries (except for @media on all)   
+
+
+---
+
+15.2
+Replace "screenshot.png" with a screenshot of your theme using your own images
+
+---
+
+RESOURCE:
+https://developer.wordpress.org/reference
+
+    
+
+--------------
+BEFORE DEPLOYMENT
+
+1) Change "define('WP_DEBUG', true);" back to "false"
+2) Remove Developer Plugin
+3) Only put "style.css" online? Not SCSS/SASS files?
+
+
+
+
+
+
+
+
+
+
+
 
 
 
