@@ -322,6 +322,18 @@ ADD OPTIONAL CUSTOM LOGO
 
 ------
 
+4.5 
+MAKE HEADER RESPONSIVE
+
+1) .site-branding - - add "flex: 1 0 auto;" to class so that logo can't shrink
+
+2) Remove ::before and ::after (we don't need to clear floats anymore)
+    (in "sass/modules/_clearings.scss" - - might need to do this for other sections too)
+  
+
+
+------
+
 5.1
 MENUS
 
