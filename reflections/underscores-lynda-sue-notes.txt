@@ -337,7 +337,9 @@ MAKE HEADER RESPONSIVE
 5.1
 MENUS
 
-1) Register the menu and add it to Customizer (in "functions.php"):
+Must Register the menu AND add it to Customizer (in "functions.php"):
+
+1) Register the menu:
 
 register_nav_menus( array, $locations = array() )
 
@@ -345,7 +347,6 @@ register_nav_menus( array, $locations = array() )
     'primary' => esc_html__( 'Header', 'humescores' ),
     'footer-social' => esc_html__( 'Footer-social', 'humescores' ),
   ) );
-
 
 
 2) Display menu on the front end:
@@ -367,6 +368,39 @@ function humescores_scripts() {
   wp_enqueue_script( 'humescores-navigation', get_template_directory_uri() . '/js/navigation.js', array('jquery'), '20151215', true );
 
   }
+
+Then, had to make button labels translatable - they have to be in a PHP file, not a JS file - - Right after above script, added the following:
+
+  wp_localize_script( 'lakesidezen-navigation', 'lakesidezenScreenReaderText', array( 
+    'expand' => __( 'Expand child menu', 'lakesidezen' ),
+    'collapse' => __( 'Collapse child menu', 'lakesidezen' ),
+            ));
+
+--------
+
+5.4
+MODIFY MENU
+
+1) Second line below writes over an icon - replaces it with "+" for symbol on buttons for menu items with submenus (in navigation.js):
+
+    var dropdownToggle = $( '<button />', { 'class': 'dropdown-toggle', 'aria-expanded': false })
+      .append( $( '<span />', { 'class': 'dropdown-symbol', text: '+' }) )
+      .append( $( '<span />', { 'class': 'screen-reader-text', text: lakesidezenScreenReaderText.expand }) );
+
+2) Removed code that toggles on the submenu for when you are at a page within that submenu so that it can show as active (I left it there for lakesidezen theme - NOTE - code below is expanded from what is in Mor10's tutorial) - this is what to remove:
+
+    // Set the active submenu dropdown toggle button initial state. REMOVE THIS AND NEXT IF YOU DONt Want submenus toggled on for subpages
+    container.find( '.current-menu-ancestor > button' )
+      .addClass( 'toggled-on' )
+      .attr( 'aria-expanded', 'true' )
+      .find( '.screen-reader-text' )
+      .text( lakesidezenScreenReaderText.collapse );
+    // Set the active submenu initial state.
+    container.find( '.current-menu-ancestor > .sub-menu' ).addClass( 'toggled-on' );
+
+3) Added Mor10's code for "site/_header-menu.scss" - -put @import "header-menu"; in "site/_header.scss" and removed the menu styling down to ".comment-navigation" in "navigation/_menus.scss"
+
+
 
 
 ---------
